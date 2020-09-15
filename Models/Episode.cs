@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MandalorianDB.Datalayer;
 
-namespace MandalorianDB.BusinessLayer
+namespace MandalorianDB.Models
+
 {
     public class Episode
     {
