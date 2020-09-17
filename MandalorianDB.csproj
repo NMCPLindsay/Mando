@@ -63,13 +63,37 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BusinessLayer\Episode.cs" />
+    <Compile Include="DataLayer\SessionData.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PresentationLayer\PhilView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Episode.cs" />
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\App.g.cs" />
+    <Compile Include="obj\Debug\App.g.i.cs" />
+    <Compile Include="obj\Debug\MainWindow.g.cs" />
+    <Compile Include="obj\Debug\MainWindow.g.i.cs" />
+    <Compile Include="obj\Debug\PresentationLayer\PhilView.g.i.cs" />
+    <Compile Include="obj\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="obj\Release\App.g.cs" />
+    <Compile Include="obj\Release\MainWindow.g.cs" />
+    <Compile Include="PresentationLayer\PhilView.xaml.cs">
+      <DependentUpon>PhilView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -87,13 +111,33 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include=".vs\ProjectSettings.json" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\MandalorianDB.csprojAssemblyReference.cache" />
+    <None Include="obj\Debug\MandalorianDB_MarkupCompile.i.cache" />
+    <None Include="obj\Release\MandalorianDB_MarkupCompile.cache" />
+    <None Include="obj\Release\MandalorianDB_MarkupCompile.lref" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\MandalorianDB\v16\" />
+    <Folder Include=".vs\Mando\v16\" />
+    <Folder Include="Assests\" />
+    <Folder Include="bin\Debug\" />
+    <Folder Include="bin\Release\" />
+    <Folder Include="BusinessLayer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="obj\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

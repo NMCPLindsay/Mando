@@ -1,0 +1,64 @@
+﻿<Window x:Class="MandalorianDB.PresentationLayer.PhilView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MandalorianDB.PresentationLayer"
+        mc:Ignorable="d"
+        Title="Phil's Mandolorian DB" Height="450" Width="800" Background="Brown">
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0">
+            <Label Content="The Mandalorian" Foreground="RosyBrown" FontSize="32"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="Episode" Foreground="CadetBlue" Margin="10"/>
+                    <RadioButton Content="Season" Foreground="CadetBlue" Margin="10"/>
+                    <RadioButton Content="Character" Foreground="CadetBlue" Margin="10"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="search criteria" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
+                    <Button Content="Search" Background="Brown" Foreground="White" MinHeight="10" Margin="10"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <StackPanel Orientation="Vertical">
+                    <ListBox Margin="10" ItemsSource="{Binding}" MaxHeight="200" MinHeight="100" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
