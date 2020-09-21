@@ -21,7 +21,7 @@
         <Grid Grid.Row="0">
             <Label Content="The Mandalorian" Foreground="RosyBrown" FontSize="32"/>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" Margin="5,0,-5,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -102,6 +102,10 @@
                 <Button Content="Edit" Background="Brown" Foreground="White" MinHeight="10" Margin="2"/>
                 <Button Content="Delete" Background="Brown" Foreground="White" MinHeight="10" Margin="2"/>
             </StackPanel>
+            
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Image Source="../Assets/lorian.jpg" Grid.RowSpan="6" HorizontalAlignment="Right"/>
         </Grid>
     </Grid>
 </Window>

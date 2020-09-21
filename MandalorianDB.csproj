@@ -131,12 +131,12 @@
   <ItemGroup>
     <Folder Include=".vs\MandalorianDB\v16\" />
     <Folder Include=".vs\Mando\v16\" />
-    <Folder Include="Assests\" />
     <Folder Include="bin\Debug\" />
     <Folder Include="bin\Release\" />
     <Folder Include="BusinessLayer\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\lorian.jpg" />
     <Content Include="obj\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
