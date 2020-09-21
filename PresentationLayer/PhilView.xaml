@@ -6,8 +6,23 @@
         xmlns:local="clr-namespace:MandalorianDB.PresentationLayer"
         mc:Ignorable="d"
         Title="Phil's Mandolorian DB" Height="450" Width="800" Background="Brown">
-    <Grid Background="Black" Margin="5" >
-        <Grid.RowDefinitions>
+    <Window.Resources>
+        <Style x:Key="ButtonStyleSmall" TargetType="Button">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="10,5,10,5"/>
+            <Setter Property="Background" Value="Brown"/>
+            <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkOrange"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="Black" Margin="5">
+        
+            <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="1*"/>
@@ -87,7 +102,7 @@
             <Grid Grid.Row="1" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="search criteria" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
-                    <Button Content="Search" Background="Brown" Foreground="White" MinHeight="10" Margin="10"/>
+                    <Button Content="Search" Style="{StaticResource ButtonStyleSmall}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
@@ -98,9 +113,9 @@
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Add" Background="Brown" Foreground="White" MinHeight="10" Margin="2"/>
-                <Button Content="Edit" Background="Brown" Foreground="White" MinHeight="10" Margin="2"/>
-                <Button Content="Delete" Background="Brown" Foreground="White" MinHeight="10" Margin="2"/>
+                <Button Content="Add" Style="{StaticResource ButtonStyleSmall}"/>
+                <Button Content="Edit" Style="{StaticResource ButtonStyleSmall}"/>
+                <Button Content="Delete" Style="{StaticResource ButtonStyleSmall}"/>
             </StackPanel>
             
         </Grid>

@@ -1,0 +1,24 @@
+﻿<Window x:Class="MandalorianDB.ViewSelect"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MandalorianDB"
+        mc:Ignorable="d"
+        Title="View Selection" Height="100" Width="250" Background="Black">
+    <Window.Resources>
+        <Style x:Key="Buttons" TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="Brown"/>
+            <Setter Property="Foreground" Value="White"/>
+            
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="Phil" Content="Phil's View" Style="{StaticResource Buttons}" Click="Phil_Click"/>
+            <Button x:Name="Jess" Content="Jess' View" Style="{StaticResource Buttons}" Click="Jess_Click"/>
+            <Button x:Name="Michelle" Content="Michelle's View" Style="{StaticResource Buttons}" Click="Michelle_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
