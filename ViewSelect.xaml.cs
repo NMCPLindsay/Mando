@@ -40,8 +40,8 @@ namespace MandalorianDB
 
         private void Michelle_Click(object sender, RoutedEventArgs e)
         {
-           // Window window = new MichelleView();
-           // window.Show();
+            Window window = new MichelleView();
+            window.Show();
         }
     }
 }
