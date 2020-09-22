@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace MandalorianDB.PresentationLayer
 {
     /// <summary>
-    /// Interaction logic for PhilView.xaml
+    /// Interaction logic for PhilAddView.xaml
     /// </summary>
-    public partial class PhilView : Window
+    public partial class PhilAddView : Window
     {
-        public PhilView()
+        public PhilAddView()
         {
             InitializeComponent();
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

@@ -6,12 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MandalorianDB.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MandalorianDB.DataLayer 
 {
 	public class SessionData
 	{
-		public List<Episode> GetEpisodeList()
+		public static List<Episode> GetEpisodeList()
 		{
 			return new List<Episode>()
 		{

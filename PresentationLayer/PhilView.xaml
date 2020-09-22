@@ -20,6 +20,9 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    <Window.DataContext>
+        <local:PhilViewModel/>
+    </Window.DataContext>
     <Grid Background="Black" Margin="5">
         
             <Grid.RowDefinitions>
@@ -52,37 +55,37 @@
             <Grid Grid.Row="0" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Episode: " Foreground="CadetBlue"/>
-                    <TextBlock Text="Name"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedEpisode.Name}"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Season: " Foreground="CadetBlue"/>
-                    <TextBlock Text="SeasonNumber"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedEpisode.SeasonNumber}"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Writer: " Foreground="CadetBlue"/>
-                    <TextBlock Text="Writer"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedEpisode.Writer}"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="3" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Director: " Foreground="CadetBlue"/>
-                    <TextBlock Text="Director"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedEpisode.Director}"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="4" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Characters: " Foreground="CadetBlue"/>
-                    <ListBox Margin="10" ItemsSource="{Binding}" MaxHeight="75" MinHeight="25" Width="150" />
+                    <ListBox Margin="10" ItemsSource="{Binding Path=SelectedEpisode.Characters}" MaxHeight="75" MinHeight="25" Width="150" SelectionChanged="ListBox_SelectionChanged" />
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="5" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Details" Foreground="CadetBlue"/>
-                    <RichTextBox Margin="10"  MaxHeight="100" MinHeight="50" Width="200"  />
+                    <TextBox Text="{Binding SelectedEpisode.EpisodeDetails}" TextWrapping="WrapWithOverflow" Margin="10"  MaxHeight="100" MinHeight="50" Width="200" IsReadOnly="True" />
                 </StackPanel>
             </Grid>
         </Grid>
@@ -101,20 +104,20 @@
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="search criteria" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
+                    <TextBox Text="search criteria" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
                     <Button Content="Search" Style="{StaticResource ButtonStyleSmall}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
                 <StackPanel Orientation="Vertical">
-                    <ListBox Margin="10" ItemsSource="{Binding}" MaxHeight="200" MinHeight="100" />
+                    <ListBox Margin="10" ItemsSource="{Binding Path=Episodes}" SelectedItem="{Binding Path=SelectedEpisode}" DisplayMemberPath="Name" MaxHeight="200" MinHeight="100" />
                 </StackPanel>
             </Grid>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Add" Style="{StaticResource ButtonStyleSmall}"/>
-                <Button Content="Edit" Style="{StaticResource ButtonStyleSmall}"/>
+                <Button Content="Add" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonAddCommand}"/>
+                <Button Content="Edit" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonEditCommand}" CommandParameter="{Binding SelectedEpisode}" />
                 <Button Content="Delete" Style="{StaticResource ButtonStyleSmall}"/>
             </StackPanel>
             
