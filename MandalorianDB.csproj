@@ -60,7 +60,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BusinessLayer\ObservableObject.cs" />
+    <Compile Include="BusinessLayer\RelayCommand.cs" />
     <Compile Include="DataLayer\SessionData.cs" />
+    <Page Include="PresentationLayer\MichelleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PresentationLayer\PhilEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,6 +84,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\EpisodeOperation.cs" />
+    <Compile Include="PresentationLayer\MichelleView.xaml.cs">
+      <DependentUpon>MichelleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayer\MichelleViewModel.cs" />
     <Compile Include="PresentationLayer\PhilEditView.xaml.cs">
       <DependentUpon>PhilEditView.xaml</DependentUpon>
     </Compile>
@@ -134,6 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\lorian.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\mando-bg.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

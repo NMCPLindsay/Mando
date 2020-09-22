@@ -10,7 +10,7 @@
         <Style x:Key="ButtonStyleSmall" TargetType="Button">
             <Setter Property="Width" Value="50"/>
             <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="10,5,10,5"/>
+            <Setter Property="Margin" Value="5"/>
             <Setter Property="Background" Value="Brown"/>
             <Setter Property="Foreground" Value="AntiqueWhite"/>
             <Style.Triggers>
@@ -79,7 +79,7 @@
             <Grid Grid.Row="4" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Characters: " Foreground="CadetBlue"/>
-                    <ListBox Margin="10" ItemsSource="{Binding Path=SelectedEpisode.Characters}" MaxHeight="75" MinHeight="25" Width="150" SelectionChanged="ListBox_SelectionChanged" />
+                    <ListBox Margin="10" ItemsSource="{Binding Path=SelectedEpisode.Characters}" MaxHeight="75" MinHeight="25" Width="150"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="5" Grid.Column="0">
@@ -97,20 +97,20 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Episode" Foreground="CadetBlue" Margin="10"/>
-                    <RadioButton Content="Season" Foreground="CadetBlue" Margin="10"/>
-                    <RadioButton Content="Character" Foreground="CadetBlue" Margin="10"/>
+                    <RadioButton x:Name="EpisodeSortAsc" Content="Episode Asc"  Foreground="CadetBlue" Margin="10" Command="{Binding RadioCommandSortAsc}" CommandParameter="Episodes"/>
+                    <RadioButton x:Name="EpisodeSortDesc" Content="Episode Desc" Foreground="CadetBlue" Margin="10" Command="{Binding RadioCommandSortDesc}" CommandParameter= "Episodes"/>
+                   
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox Text="search criteria" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
-                    <Button Content="Search" Style="{StaticResource ButtonStyleSmall}"/>
+                    <TextBox x:Name="SearchCrit" Text="Enter Character Name" TextSearch.Text="{Binding CharacterName}" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
+                    <Button Content="Search" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSearchCommand}" CommandParameter="{Binding CharacterName}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
                 <StackPanel Orientation="Vertical">
-                    <ListBox Margin="10" ItemsSource="{Binding Path=Episodes}" SelectedItem="{Binding Path=SelectedEpisode}" DisplayMemberPath="Name" MaxHeight="200" MinHeight="100" />
+                    <ListBox Margin="10" ItemsSource="{Binding Episodes}" SelectedItem="{Binding SelectedEpisode}" DisplayMemberPath="Name" MaxHeight="200" MinHeight="100" />
                 </StackPanel>
             </Grid>
         </Grid>
@@ -118,7 +118,8 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Add" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonAddCommand}"/>
                 <Button Content="Edit" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonEditCommand}" CommandParameter="{Binding SelectedEpisode}" />
-                <Button Content="Delete" Style="{StaticResource ButtonStyleSmall}"/>
+                <Button Content="Delete" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonDeleteCommand}"/>
+                <Button Content="Quit" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonQuitCommmand}"/>
             </StackPanel>
             
         </Grid>
