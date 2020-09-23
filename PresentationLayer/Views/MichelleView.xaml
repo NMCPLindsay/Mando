@@ -15,9 +15,12 @@
             <Setter Property="Background" Value="DarkGoldenrod"/>
         </Style>
     </Window.Resources>
+    <Window.DataContext>
+        <local:MichelleViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="..\Assets\mando-bg.jpg"
+            <ImageBrush Stretch="Fill" ImageSource="..\..\Assets\mando-bg.jpg"
             AlignmentY="Top" AlignmentX="Center" Opacity=".8"/>
         </Grid.Background>
         <Grid.RowDefinitions>

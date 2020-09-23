@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 
 namespace MandalorianDB.PresentationLayer
 {
-    class MichelleViewModel : ObservableObject
+    public class MichelleViewModel : ObservableObject
     {
         private ObservableCollection<Episode> _episodes;
         private string _criteriaFilter;
