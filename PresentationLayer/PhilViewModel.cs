@@ -28,9 +28,20 @@ namespace MandalorianDB.PresentationLayer
         public ICommand RadioCommandSortAsc { get; set; }
         public ICommand RadioCommandSortDesc { get; set; }
 
-        public ObservableCollection<Episode> Episodes { get; set; }
-        
-        
+        private ObservableCollection<Episode> _episodes;
+
+        public ObservableCollection<Episode> Episodes
+        {
+            get { return _episodes; }
+            set 
+            {
+                _episodes = value;
+                OnPropertyChanged(nameof(Episodes));
+            }
+        }
+
+
+
 
         private Episode _selectedEpisode;
         private string _charName;
@@ -61,9 +72,16 @@ namespace MandalorianDB.PresentationLayer
            //ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode()));
            // ButtonEditCommand = new RelayCommand(new Action<object>(EditEpisode()));
             RadioCommandSortAsc = new RelayCommand(new Action<object>(SortAsc));
-           // RadioCommandSortDesc = new RelayCommand(new Action<object>(SortDesc));
+            RadioCommandSortDesc = new RelayCommand(new Action<object>(SortDesc));
             //ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
             ButtonQuitCommmand = new RelayCommand(new Action<object>(QuitApp));
+        }
+
+        private void SortAsc(object parameter)
+        {
+            Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.EpisodeNumber).ToList());
+            
+            
         }
 
         private void QuitApp(object parameter)
@@ -71,11 +89,14 @@ namespace MandalorianDB.PresentationLayer
             Application.Current.Shutdown();
         }
 
-        public void SortAsc(object parameter)
+        public void SortDesc(object parameter)
         {
-            
+            Episodes = new ObservableCollection<Episode>(Episodes.OrderByDescending(x => x.EpisodeNumber).ToList());
 
            
+
+
+
         }
     }
 }
