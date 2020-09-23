@@ -32,7 +32,6 @@ namespace MandalorianDB.PresentationLayer
                 OnPropertyChanged(nameof(Episodes));
             }
         }
-
         private Episode _selectedEpisode;
         private string _searchName;
 
@@ -45,12 +44,6 @@ namespace MandalorianDB.PresentationLayer
                 ;
             }
         }
-        public MichelleViewModel()
-        {
-            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-
-            if (Episodes.Any()) SelectedEpisode = Episodes[0];
-        }
         public Episode SelectedEpisode
         {
             get { return _selectedEpisode; }
@@ -60,6 +53,31 @@ namespace MandalorianDB.PresentationLayer
                 OnPropertyChanged(nameof(SelectedEpisode));
             }
         }
+        public MichelleViewModel()
+        {
+            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+
+            if (Episodes.Any()) SelectedEpisode = Episodes[0];
+
+            RadioCommandSortAsc = new RelayCommand(new Action<object>(SortAsc));
+            RadioCommandSortDesc = new RelayCommand(new Action<object>(SortDesc));
+            RadioCommandSearchCrit = new RelayCommand(new Action<object>(SetSearchCriteria));
+            ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
+        }
+
+        private void AddEpisode(object parameter)
+        {
+            Episode newEpisode = new Episode();
+            Window window = new PhilAddView();
+            window.Show();
+
+        }
+
+        private void SetSearchCriteria(object parameter)
+        {
+            CriteriaFilter = parameter.ToString();
+        }
+
         private void Search(object parameter)
         {
             Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
@@ -102,10 +120,6 @@ namespace MandalorianDB.PresentationLayer
                         break;
                 }
             }
-            else
-            {
-                MessageBox.Show("Please select a search criteria.");
-            }
         }
 
         private void SortAsc(object parameter)
@@ -113,14 +127,15 @@ namespace MandalorianDB.PresentationLayer
             Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.EpisodeNumber).ToList());
         }
 
-        private void QuitApp(object parameter)
-        {
-            Application.Current.Shutdown();
-        }
 
         public void SortDesc(object parameter)
         {
             Episodes = new ObservableCollection<Episode>(Episodes.OrderByDescending(x => x.EpisodeNumber).ToList());
         }
+
+        public ICommand ButtonSearchCommand { get; set; }
+        public ICommand RadioCommandSortAsc { get; set; }
+        public ICommand RadioCommandSortDesc { get; set; }
+        public ICommand RadioCommandSearchCrit { get; set; }
     }
 }
