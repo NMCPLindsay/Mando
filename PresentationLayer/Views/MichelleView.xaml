@@ -37,13 +37,20 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="search criteria" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="Black" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
-                <Button Content="Search" Style="{StaticResource ButtonStyleSmall}"/>
+                <TextBox Name="Search" FontFamily="Permanent Marker" Text=" " Margin="40,0,0,0" VerticalAlignment="Center" TextAlignment="Center" Foreground="Black" Background="White" Width="100" Height="20" />
+                <Button Content="Search"  Command="{Binding ButtonSearchCommand}" CommandParameter="{Binding ElementName=Search}" Style="{StaticResource ButtonStyleSmall}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton FontFamily="Permanent Marker" Margin="5,0,0,10" Content="Director" Command="{Binding RadioCommandSearchCrit}" CommandParameter="Director"/>
+                <RadioButton FontFamily="Permanent Marker" Margin="20,0,0,10" Content="Writer" Command="{Binding RadioCommandSearchCrit}" CommandParameter="Writer"/>
+                <RadioButton FontFamily="Permanent Marker" Margin="20,0,0,10" Content="Character" Command="{Binding RadioCommandSearchCrit}" CommandParameter="Character"/>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="0" Grid.Column="0">
-            <Button Content="Back To Views Screen" Width="200" Opacity=".9" FontFamily="Permanent Marker" Style="{StaticResource ButtonStyleSmall}" Click="Button_Click"></Button>
+            <Button Content="Back To Views Screen" Width="200" Opacity=".9" FontFamily="Permanent Marker" Style="{StaticResource ButtonStyleSmall}" Click="ScreenButton_Click"></Button>
+            <Button Margin="0,0,0,50" Content="Quit" Width="200" Opacity=".9" FontFamily="Permanent Marker" Style="{StaticResource ButtonStyleSmall}" Click="QuitButton_Click"></Button>
+
         </Grid>
         <Grid Grid.Row="0" Grid.Column="1">
             <Label Content="The Mandalorian Database App" Foreground="DarkGoldenrod" FontSize="30" FontWeight="Bold" FontStyle="Italic" FontFamily="Permanent Marker"  HorizontalContentAlignment="Center"/>
@@ -51,7 +58,7 @@
         
         <Grid Grid.Row="2" Grid.Column="0">
             <Label HorizontalAlignment="Left" Margin="0,0,0,0" Content="Episodes" Foreground="Black" FontFamily="Permanent Marker"/>
-            <ListBox Margin="0,20,0,0" Height="100" Width="200" Opacity=".8" ItemsSource="{Binding Episodes}" SelectedItem="{Binding SelectedEpisode}" DisplayMemberPath="Name" />
+            <ListBox FontFamily="Permanent Marker" Margin="0,20,0,0" Height="100" Width="200" Opacity=".8" ItemsSource="{Binding Episodes}" SelectedItem="{Binding SelectedEpisode}" DisplayMemberPath="Name" />
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0">
             <Label Content="Sort by" HorizontalAlignment="Left" Margin="15,0,0,0" FontFamily="Permanent Marker"></Label>

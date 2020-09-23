@@ -24,9 +24,14 @@ namespace MandalorianDB.PresentationLayer
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ScreenButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
