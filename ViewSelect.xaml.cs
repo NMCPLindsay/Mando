@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MandalorianDB.PresentationLayer.Views;
 using MandalorianDB.PresentationLayer;
 
 namespace MandalorianDB
@@ -34,8 +35,8 @@ namespace MandalorianDB
 
         private void Jess_Click(object sender, RoutedEventArgs e)
         {
-           // Window window = new JessView();
-           // window.Show();
+            Window window = new JessView();
+            window.Show();
         }
 
         private void Michelle_Click(object sender, RoutedEventArgs e)

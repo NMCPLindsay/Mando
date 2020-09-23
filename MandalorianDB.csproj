@@ -62,6 +62,10 @@
     <Compile Include="BusinessLayer\ObservableObject.cs" />
     <Compile Include="BusinessLayer\RelayCommand.cs" />
     <Compile Include="DataLayer\SessionData.cs" />
+    <Page Include="PresentationLayer\Views\JessView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="PresentationLayer\Views\MichelleView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,7 +94,11 @@
   <ItemGroup>
     <Compile Include="Models\EpisodeListOperations.cs" />
     <Compile Include="Models\EpisodeOperation.cs" />
+    <Compile Include="PresentationLayer\ViewModels\JessViewModel.cs" />
     <Compile Include="PresentationLayer\ViewModels\PhilAddCharViewModel.cs" />
+    <Compile Include="PresentationLayer\Views\JessView.xaml.cs">
+      <DependentUpon>JessView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PresentationLayer\Views\MichelleView.xaml.cs">
       <DependentUpon>MichelleView.xaml</DependentUpon>
     </Compile>
