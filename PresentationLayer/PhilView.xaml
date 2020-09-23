@@ -10,12 +10,47 @@
         <Style x:Key="ButtonStyleSmall" TargetType="Button">
             <Setter Property="Width" Value="50"/>
             <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Margin" Value="2.5"/>
             <Setter Property="Background" Value="Brown"/>
             <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Setter Property="BorderBrush" Value="RosyBrown"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="DarkOrange"/>
+                    <Setter Property="Background" Value="DarkOliveGreen"/>
+                    <Setter Property="Foreground" Value="AntiqueWhite"/>
+                    
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="TextBoxDetails" TargetType="TextBox">
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MaxHeight" Value="100"/>
+            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+        <Style x:Key="MainListBox" TargetType="ListBox">
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="MaxHeight" Value="200"/>
+            <Setter Property="MinHeight" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="CharListBox" TargetType="ListBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="MaxHeight" Value="75"/>
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="Width" Value="150"/>
+        </Style>
+        <Style x:Key="RadioButtonSelect" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="CadetBlue"/>
+            <Setter Property="Margin" Value="5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkOliveGreen"/>
+                    <Setter Property="Foreground" Value="AntiqueWhite"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -24,8 +59,8 @@
         <local:PhilViewModel/>
     </Window.DataContext>
     <Grid Background="Black" Margin="5">
-        
-            <Grid.RowDefinitions>
+
+        <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="1*"/>
@@ -34,7 +69,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
-            
+
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0">
             <Label Content="The Mandalorian" Foreground="RosyBrown" FontSize="32"/>
@@ -79,13 +114,13 @@
             <Grid Grid.Row="4" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Characters: " Foreground="CadetBlue"/>
-                    <ListBox Margin="10" ItemsSource="{Binding Path=SelectedEpisode.Characters}" MaxHeight="75" MinHeight="25" Width="150"/>
+                    <ListBox Style="{StaticResource CharListBox}" ItemsSource="{Binding Path=SelectedEpisode.Characters}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="5" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Details" Foreground="CadetBlue"/>
-                    <TextBox Text="{Binding SelectedEpisode.EpisodeDetails}" TextWrapping="WrapWithOverflow" Margin="10"  MaxHeight="100" MinHeight="50" Width="200" IsReadOnly="True" />
+                    <TextBox Text="{Binding SelectedEpisode.EpisodeDetails}" Style="{StaticResource TextBoxDetails}"/>
                 </StackPanel>
             </Grid>
         </Grid>
@@ -93,24 +128,37 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton x:Name="EpisodeSortAsc" Content="Episode Asc"  Foreground="CadetBlue" Margin="10" Command="{Binding RadioCommandSortAsc}" CommandParameter="Episodes"/>
-                    <RadioButton x:Name="EpisodeSortDesc" Content="Episode Desc" Foreground="CadetBlue" Margin="10" Command="{Binding RadioCommandSortDesc}" CommandParameter= "Episodes"/>
-                   
+                    <RadioButton x:Name="EpisodeSortAsc" IsChecked="True" Content="Episode Asc" Style="{StaticResource RadioButtonSelect}" Command="{Binding RadioCommandSortAsc}" CommandParameter="Episodes"/>
+                    <RadioButton x:Name="EpisodeSortDesc" Content="Episode Desc" Style="{StaticResource RadioButtonSelect}" Command="{Binding RadioCommandSortDesc}" CommandParameter= "Episodes"/>
+
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
-                <StackPanel Orientation="Horizontal">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="209*"/>
+                    <ColumnDefinition Width="52*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBox Name="TBoxSearch" Text="" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
                     <Button Content="Search" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSearchCommand}" CommandParameter="{Binding ElementName=TBoxSearch}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Style="{StaticResource RadioButtonSelect}" Content="Director" Command="{Binding RadioCommandSearchCrit}" CommandParameter="Director"/>
+                    <RadioButton Style="{StaticResource RadioButtonSelect}" Content="Writer" Command="{Binding RadioCommandSearchCrit}" CommandParameter="Writer"/>
+                    <RadioButton Style="{StaticResource RadioButtonSelect}" Content="Character" Command="{Binding RadioCommandSearchCrit}" CommandParameter="Character"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="3" Grid.Column="0">
                 <StackPanel Orientation="Vertical">
-                    <ListBox Margin="10" ItemsSource="{Binding Episodes}" SelectedItem="{Binding SelectedEpisode}" DisplayMemberPath="Name" MaxHeight="200" MinHeight="100" />
+                    <ListBox Style="{StaticResource MainListBox}" ItemsSource="{Binding Episodes}" SelectedItem="{Binding SelectedEpisode}" DisplayMemberPath="Name"/>
+
                 </StackPanel>
             </Grid>
         </Grid>
@@ -121,7 +169,7 @@
                 <Button Content="Delete" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonDeleteCommand}"/>
                 <Button Content="Quit" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonQuitCommmand}"/>
             </StackPanel>
-            
+
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2">
             <Image Source="../Assets/lorian.jpg" Grid.RowSpan="6" HorizontalAlignment="Right"/>
