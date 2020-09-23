@@ -84,6 +84,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\EpisodeListOperations.cs" />
     <Compile Include="Models\EpisodeOperation.cs" />
     <Compile Include="PresentationLayer\MichelleView.xaml.cs">
       <DependentUpon>MichelleView.xaml</DependentUpon>

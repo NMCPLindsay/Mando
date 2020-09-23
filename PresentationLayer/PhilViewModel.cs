@@ -77,6 +77,29 @@ namespace MandalorianDB.PresentationLayer
             ButtonQuitCommmand = new RelayCommand(new Action<object>(QuitApp));
         }
 
+        private void Search(object parameter)
+        {
+            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            ObservableCollection<Episode> sortedEpisodes = new ObservableCollection<Episode>();
+            foreach (Episode episode in Episodes)
+            {
+                if (episode.Characters.Contains(CharacterName))
+                {
+                    sortedEpisodes.Add(episode);
+                }
+            }
+            if (sortedEpisodes != null)
+            {
+                Episodes = sortedEpisodes;
+
+            }
+            else
+            {
+                Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+                MessageBox.Show("The character, " + CharacterName + " is not found.");
+            }
+        }
+
         private void SortAsc(object parameter)
         {
             Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.EpisodeNumber).ToList());
