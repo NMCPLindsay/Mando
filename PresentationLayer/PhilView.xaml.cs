@@ -24,6 +24,9 @@ namespace MandalorianDB.PresentationLayer
             InitializeComponent();
         }
 
-       
+        private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

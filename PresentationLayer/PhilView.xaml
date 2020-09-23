@@ -104,8 +104,8 @@
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="SearchCrit" Text="Enter Character Name" TextSearch.Text="{Binding CharacterName}" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
-                    <Button Content="Search" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSearchCommand}" CommandParameter="{Binding CharacterName}"/>
+                    <TextBox Name="TBoxSearch" Text="" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
+                    <Button Content="Search" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSearchCommand}" CommandParameter="{Binding ElementName=TBoxSearch}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">

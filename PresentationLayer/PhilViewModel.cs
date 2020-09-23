@@ -44,12 +44,16 @@ namespace MandalorianDB.PresentationLayer
 
 
         private Episode _selectedEpisode;
-        private string _charName;
+        private string _searchName;
 
-        public string CharacterName
+        public string SearchName
         {
-            get { return _charName; }
-            set { _charName = value; }
+            get { return _searchName; }
+            set 
+            { 
+                _searchName = value;
+                ;
+            }
         }
 
 
@@ -73,31 +77,39 @@ namespace MandalorianDB.PresentationLayer
            // ButtonEditCommand = new RelayCommand(new Action<object>(EditEpisode()));
             RadioCommandSortAsc = new RelayCommand(new Action<object>(SortAsc));
             RadioCommandSortDesc = new RelayCommand(new Action<object>(SortDesc));
-            //ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
+            ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
             ButtonQuitCommmand = new RelayCommand(new Action<object>(QuitApp));
         }
 
         private void Search(object parameter)
         {
-            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-            ObservableCollection<Episode> sortedEpisodes = new ObservableCollection<Episode>();
-            foreach (Episode episode in Episodes)
+            SearchName = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
+            for (int i = Episodes.Count-1; i > 0; i--)
             {
-                if (episode.Characters.Contains(CharacterName))
-                {
-                    sortedEpisodes.Add(episode);
-                }
-            }
-            if (sortedEpisodes != null)
-            {
-                Episodes = sortedEpisodes;
+               
+                
+                    Episode episode = Episodes[i-1];
+                    if (!(episode.Characters.Contains(SearchName)))
+                    {
+                        Episodes.RemoveAt(i-1);
+                    }
+                
+                
+                
 
+                
+                
             }
-            else
-            {
-                Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-                MessageBox.Show("The character, " + CharacterName + " is not found.");
-            }
+
+            //foreach (Episode episode in Episodes)
+            //{
+            //    if (!episode.Characters.Contains(CharacterName))
+            //    {
+            //        Episodes.Remove(episode);
+            //    }
+
+            //}
+
         }
 
         private void SortAsc(object parameter)
