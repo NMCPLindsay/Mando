@@ -1,0 +1,102 @@
+﻿<Window x:Class="MandalorianDB.PresentationLayer.MichelleView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MandalorianDB.PresentationLayer"
+        mc:Ignorable="d"
+        Title="MichelleView" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="ButtonStyleSmall" TargetType="Button">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="10,5,10,5"/>
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="Background" Value="DarkGoldenrod"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="..\..\Assets\mando-bg.jpg"
+            AlignmentY="Top" AlignmentX="Center" Opacity=".8"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="search criteria" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
+                <Button Content="Search" Style="{StaticResource ButtonStyleSmall}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Label Content="The Mandalorian Database App" Foreground="DarkGoldenrod" FontSize="30" FontWeight="Bold" FontStyle="Italic" FontFamily="Permanent Marker"  HorizontalContentAlignment="Center"/>
+        </Grid>
+        
+        <Grid Grid.Row="1" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <ComboBox Width="200" Height="30" Text="Select Season">
+                    <ComboBoxItem Content="Season 1"></ComboBoxItem>
+                    <ComboBoxItem Content="Season 2"></ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Label HorizontalAlignment="Left" Margin="0,0,0,0" Content="Episodes" Foreground="Black" FontFamily="Permanent Marker"/>
+            <TextBox Margin="0,20,0,0" Height="100" Width="200" Opacity=".8"   />
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="0">
+            <ComboBox Text="Sort by" Width="120" Height="30" HorizontalAlignment="Left" FontFamily="Permanent Marker">
+                <ComboBoxItem>Name</ComboBoxItem>
+                <ComboBoxItem>Number</ComboBoxItem>
+                <ComboBoxItem>Rating</ComboBoxItem>
+            </ComboBox>
+            <ComboBox Text="Filter By" Width="120" Height="30" HorizontalAlignment="Right" FontFamily="Permanent Marker">
+                <ComboBoxItem>Director</ComboBoxItem>
+                <ComboBoxItem>Writer</ComboBoxItem>
+                <ComboBoxItem>Characters</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="103*"/>
+                <ColumnDefinition Width="162*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="28,0,27.8,0" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+                <Button Content="Add" Style="{StaticResource ButtonStyleSmall}"/>
+                <Button Content="Edit" Style="{StaticResource ButtonStyleSmall}"/>
+                <Button Content="Delete" Style="{StaticResource ButtonStyleSmall}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Label Content="Episode: " Margin="0,20,0,0" Foreground="Black" FontFamily="Permanent Marker"/>
+            <TextBlock Text="Name"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="400" Height="40" Margin="5" FontFamily="Permanent Marker" Opacity=".9"/>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="2">
+            <Label Content="Director: " Margin="20,20,0,0" Foreground="Black" FontFamily="Permanent Marker"/>
+            <TextBlock Text="Director"  Margin="40,0,0,0" HorizontalAlignment="Left" TextAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="200" Height="40"  FontFamily="Permanent Marker" Opacity=".9"/>
+            <Label Content="Writer: " Margin="280,20,0,0" Foreground="Black" FontFamily="Permanent Marker"/>
+            <TextBlock Text="Writer"  Margin="0,0,30,0"  HorizontalAlignment="Right" TextAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="200" Height="40"  FontFamily="Permanent Marker" Opacity=".9"/>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="2">
+            <Label Content="Characters: " Margin="0,20,0,0" Foreground="Black" FontFamily="Permanent Marker"/>
+            <TextBlock  HorizontalAlignment="Center" TextAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="400" Height="50" Margin="20,0,0,0" FontFamily="Permanent Marker" Opacity=".9"/>
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="2">
+            <Label Content="Description: " Margin="0,20,0,0" Foreground="Black" FontFamily="Permanent Marker"/>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="400" Height="50" Margin="20,0,0,0" FontFamily="Permanent Marker" Opacity=".9"/>
+        </Grid>
+    </Grid>
+</Window>
+

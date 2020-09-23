@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MandalorianDB.PresentationLayer
 {
-    class PhilEditViewModel
+    class MichelleViewModel
     {
     }
 }

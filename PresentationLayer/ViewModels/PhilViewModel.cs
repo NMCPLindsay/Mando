@@ -82,13 +82,21 @@ namespace MandalorianDB.PresentationLayer
             
             if (Episodes.Any()) SelectedEpisode = Episodes[0];
 
-           //ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode()));
-           // ButtonEditCommand = new RelayCommand(new Action<object>(EditEpisode()));
+            ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
+           // ButtonEditCommand = new RelayCommand(new Action<object>(EditEpisode));
             RadioCommandSortAsc = new RelayCommand(new Action<object>(SortAsc));
             RadioCommandSortDesc = new RelayCommand(new Action<object>(SortDesc));
             RadioCommandSearchCrit = new RelayCommand(new Action<object>(SetSearchCriteria));
             ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
             ButtonQuitCommmand = new RelayCommand(new Action<object>(QuitApp));
+        }
+
+        private void AddEpisode(object parameter)
+        {
+            Episode newEpisode = new Episode();
+            Window window = new PhilAddView();
+            window.Show();
+           
         }
 
         private void SetSearchCriteria(object parameter)

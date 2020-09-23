@@ -7,15 +7,69 @@
         mc:Ignorable="d"
         Title="Edit Episode" Height="400" Width="300" Background="Black">
     <Window.Resources>
+        <Style x:Key="TextBoxInput" TargetType="TextBox">
+            <Setter Property="MinHeight" Value="10"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="TextBlockDetail" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="MinHeight" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+
+        </Style>
+        <Style x:Key="LabelDetail" TargetType="Label">
+            <Setter Property="Foreground" Value="CadetBlue"/>
+        </Style>
         <Style x:Key="ButtonStyleSmall" TargetType="Button">
             <Setter Property="Width" Value="50"/>
             <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="10,5,10,5"/>
+            <Setter Property="Margin" Value="2.5"/>
             <Setter Property="Background" Value="Brown"/>
             <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Setter Property="BorderBrush" Value="RosyBrown"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="DarkOrange"/>
+                    <Setter Property="Background" Value="DarkOliveGreen"/>
+                    <Setter Property="Foreground" Value="AntiqueWhite"/>
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="TextBoxDetails" TargetType="TextBox">
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MaxHeight" Value="100"/>
+            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+        <Style x:Key="MainListBox" TargetType="ListBox">
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="MaxHeight" Value="200"/>
+            <Setter Property="MinHeight" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="CharListBox" TargetType="ListBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="MaxHeight" Value="75"/>
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="Width" Value="150"/>
+        </Style>
+        <Style x:Key="RadioButtonSelect" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="CadetBlue"/>
+            <Setter Property="Margin" Value="5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkOliveGreen"/>
+                    <Setter Property="Foreground" Value="AntiqueWhite"/>
                 </Trigger>
             </Style.Triggers>
         </Style>

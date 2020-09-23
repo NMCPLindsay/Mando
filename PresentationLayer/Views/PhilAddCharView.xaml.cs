@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MandalorianDB.PresentationLayer
+namespace MandalorianDB.PresentationLayer.Views
 {
     /// <summary>
-    /// Interaction logic for PhilAddView.xaml
+    /// Interaction logic for PhilAddCharView.xaml
     /// </summary>
-    public partial class PhilAddView : Window
+    public partial class PhilAddCharView : Window
     {
-        public PhilAddView()
+        public PhilAddCharView()
         {
             InitializeComponent();
         }

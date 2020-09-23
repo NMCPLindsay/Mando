@@ -62,15 +62,19 @@
     <Compile Include="BusinessLayer\ObservableObject.cs" />
     <Compile Include="BusinessLayer\RelayCommand.cs" />
     <Compile Include="DataLayer\SessionData.cs" />
-    <Page Include="PresentationLayer\MichelleView.xaml">
+    <Page Include="PresentationLayer\Views\MichelleView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PresentationLayer\PhilEditView.xaml">
+    <Page Include="PresentationLayer\Views\PhilAddCharView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PresentationLayer\Views\PhilEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PresentationLayer\PhilAddView.xaml">
+    <Page Include="PresentationLayer\Views\PhilAddView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -78,7 +82,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PresentationLayer\PhilView.xaml">
+    <Page Include="PresentationLayer\Views\PhilView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -86,24 +90,28 @@
   <ItemGroup>
     <Compile Include="Models\EpisodeListOperations.cs" />
     <Compile Include="Models\EpisodeOperation.cs" />
-    <Compile Include="PresentationLayer\MichelleView.xaml.cs">
+    <Compile Include="PresentationLayer\ViewModels\PhilAddCharViewModel.cs" />
+    <Compile Include="PresentationLayer\Views\MichelleView.xaml.cs">
       <DependentUpon>MichelleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PresentationLayer\MichelleViewModel.cs" />
-    <Compile Include="PresentationLayer\PhilEditView.xaml.cs">
+    <Compile Include="PresentationLayer\ViewModels\MichelleViewModel.cs" />
+    <Compile Include="PresentationLayer\Views\PhilAddCharView.xaml.cs">
+      <DependentUpon>PhilAddCharView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayer\Views\PhilEditView.xaml.cs">
       <DependentUpon>PhilEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PresentationLayer\PhilAddView.xaml.cs">
+    <Compile Include="PresentationLayer\Views\PhilAddView.xaml.cs">
       <DependentUpon>PhilAddView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PresentationLayer\PhilAddViewModel.cs" />
-    <Compile Include="PresentationLayer\PhilEditViewModel.cs" />
+    <Compile Include="PresentationLayer\ViewModels\PhilAddViewModel.cs" />
+    <Compile Include="PresentationLayer\ViewModels\PhilEditViewModel.cs" />
     <Compile Include="ViewSelect.xaml.cs">
       <DependentUpon>ViewSelect.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Episode.cs" />
-    <Compile Include="PresentationLayer\PhilViewModel.cs" />
-    <Compile Include="PresentationLayer\PhilView.xaml.cs">
+    <Compile Include="PresentationLayer\ViewModels\PhilViewModel.cs" />
+    <Compile Include="PresentationLayer\Views\PhilView.xaml.cs">
       <DependentUpon>PhilView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MandalorianDB.PresentationLayer
 {
-    class PhilAddViewModel
+    public class PhilEditViewModel
     {
+
     }
 }

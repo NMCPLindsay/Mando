@@ -7,6 +7,25 @@
         mc:Ignorable="d"
         Title="Phil's Mandolorian DB" Height="450" Width="800" Background="Brown">
     <Window.Resources>
+        <Style x:Key="TextBoxInput" TargetType="TextBox">
+            <Setter Property="MinHeight" Value="10"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="TextBlockDetail" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="MinHeight" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+
+        </Style>
+        <Style x:Key="LabelDetail" TargetType="Label">
+            <Setter Property="Foreground" Value="CadetBlue"/>
+        </Style>
         <Style x:Key="ButtonStyleSmall" TargetType="Button">
             <Setter Property="Width" Value="50"/>
             <Setter Property="Height" Value="25"/>
@@ -90,25 +109,25 @@
             <Grid Grid.Row="0" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Episode: " Foreground="CadetBlue"/>
-                    <TextBlock Text="{Binding SelectedEpisode.Name}"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedEpisode.Name}" Style="{StaticResource TextBlockDetail}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Season: " Foreground="CadetBlue"/>
-                    <TextBlock Text="{Binding SelectedEpisode.SeasonNumber}"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedEpisode.SeasonNumber}" Style="{StaticResource TextBlockDetail}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Writer: " Foreground="CadetBlue"/>
-                    <TextBlock Text="{Binding SelectedEpisode.Writer}"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedEpisode.Writer}" Style="{StaticResource TextBlockDetail}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="3" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Director: " Foreground="CadetBlue"/>
-                    <TextBlock Text="{Binding SelectedEpisode.Director}"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                    <TextBlock Text="{Binding SelectedEpisode.Director}" Style="{StaticResource TextBlockDetail}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="4" Grid.Column="0">
@@ -144,7 +163,7 @@
                     <ColumnDefinition Width="52*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                    <TextBox Name="TBoxSearch" Text="" HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="100" MinHeight="10" Margin="10"/>
+                    <TextBox Name="TBoxSearch" Text="" Style="{StaticResource TextBoxInput}"/>
                     <Button Content="Search" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSearchCommand}" CommandParameter="{Binding ElementName=TBoxSearch}"/>
                 </StackPanel>
             </Grid>
@@ -164,7 +183,7 @@
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Add" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonAddCommand}"/>
+                <Button Content="Add" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonAddCommand}" CommandParameter="{Binding Episodes}"/>
                 <Button Content="Edit" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonEditCommand}" CommandParameter="{Binding SelectedEpisode}" />
                 <Button Content="Delete" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonDeleteCommand}"/>
                 <Button Content="Quit" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonQuitCommmand}"/>
@@ -172,7 +191,7 @@
 
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2">
-            <Image Source="../Assets/lorian.jpg" Grid.RowSpan="6" HorizontalAlignment="Right"/>
+            <Image Source="../../Assets/lorian.jpg" Grid.RowSpan="6" HorizontalAlignment="Right"/>
         </Grid>
     </Grid>
 </Window>
