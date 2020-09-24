@@ -9,47 +9,71 @@ using System.Windows;
 using System.Windows.Input;
 using MandalorianDB.BusinessLayer;
 using MandalorianDB.DataLayer;
-using MandalorianDB.Models;
+using MandalorianDB.Model;
 
-namespace MandalorianDB.PresentationLayer.ViewModels
+namespace MandalorianDB.ViewModel
 {
 
-    public class JessViewModel : ObservableObject
+
+    class JessViewModel : ObservableObject
     {
+
         #region Commands
-        //public ICommand SearchEpisodeCommand
-        //{
-        //    get { return new DelegateCommand(OnSearchEpisode); }
-        //}
-        //public ICommand AddEpisodeCommand
-        //{
-        //    get { return new DelegateCommand(OnAddEpisode); }
-        //}
-        //public ICommand DeleteEpisodeCommand
-        //{
-        //    get { return new DelegateCommand(OnDeleteEpisode); }
-        //}
+        public ICommand EditEpisodeCommand { get; set; }
 
-        //public ICommand QuitApplicationCommand
-        //{
-        //    get { return new DelegateCommand(OnQuitApplication); }
-        //}
+        public ICommand AddEpisodeCommand { get; set; }
 
-        //public ICommand SortListByDirectorCommand
-        //{
-        //    get { return new DelegateCommand(OnSortListByDirector); }
-        //}
+        public ICommand DeleteEpisodeCommand { get; set; }
+
+        public ICommand QuitApplicationCommand { get; set; }
+
+        public ICommand RadioCommandSortAsc { get; set; }
+
+        public ICommand RadioCommandSortDirector { get; set; }
+
+        public ICommand ButtonSearchCommand { get; set; }
+
         #endregion
 
         #region Field
         private ObservableCollection<Episode> _episodes;
         private Episode _selectedEpisode;
         private Episode _episodeToAdd;
-        private Episode _episodeToSearch;
+        private Episode _searchWriter;
+        private string _episodeOperationFeedback;
+        private string _searchName;
+        private Episode _episodeToEdit;
 
-        #endregion
 
         #region Properties
+
+        public string SearchName
+        {
+            get { return _searchName; }
+            set
+            {
+                _searchName = value;
+                ;
+            }
+        }
+        public string EpisodeOperationFeedback
+        {
+            get { return _episodeOperationFeedback; }
+            set
+            {
+                _episodeOperationFeedback = value;
+                OnPropertyChanged(nameof(EpisodeOperationFeedback));
+            }
+        }
+        public Episode EpisodeToEdit
+        {
+            get { return _episodeToEdit; }
+            set
+            {
+                _episodeToEdit = value;
+                OnPropertyChanged(nameof(EpisodeToEdit));
+            }
+        }
         public ObservableCollection<Episode> Episodes
         {
             get { return _episodes; }
@@ -66,6 +90,7 @@ namespace MandalorianDB.PresentationLayer.ViewModels
                 OnPropertyChanged(nameof(SelectedEpisode));
             }
         }
+
         public Episode EpisodeToAdd
         {
             get { return _episodeToAdd; }
@@ -76,50 +101,143 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             }
 
         }
-        public Episode EpisodeToSearch
+
+        public Episode SearchWriter
         {
-            get { return _episodeToSearch; }
-            set { _episodeToSearch = value; }
+            get { return _searchWriter; }
+            set { _searchWriter = value; }
+
         }
 
         #endregion
 
-        #region Method
-        private void OnSearchEpisode()
+        #region Method 
+        public JessViewModel()
         {
-           
-          
-        }
-        private void OnAddEpisode()
-        {
+            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            if (Episodes.Any()) SelectedEpisode = Episodes[0];
 
+            AddEpisodeCommand = new RelayCommand(new Action<object>(OnAddEpisode));
+            EditEpisodeCommand = new RelayCommand(new Action<object>(OnEditEpisode));
+            RadioCommandSortAsc = new RelayCommand(new Action<object>(OnSortAsc));
+            RadioCommandSortDirector = new RelayCommand(new Action<object>(OnSortDirector));
+            ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
+            QuitApplicationCommand = new RelayCommand(new Action<object>(OnQuitApplication));
+            DeleteEpisodeCommand = new RelayCommand(new Action<object>(OnDeleteEpisode));
         }
-        private void OnDeleteEpisode()
+        #endregion
+
+        private void Search(object parameter)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show($"Are you Sure you want to delete {_selectedEpisode}", "Deleted Episode", System.Windows.MessageBoxButton.OKCancel);
-            if (messageBoxResult == MessageBoxResult.OK)
+            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            SearchName = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
+            string writer = parameter.ToString();
+            if (writer != null)
             {
-                _episodes.Remove(_selectedEpisode);
+                for (int i = Episodes.Count - 1; i >= 0; i--)
+                {
+                    Episode episode = Episodes[i];
+                    if (episode.Writer != SearchName)
+                    {
+                        Episodes.RemoveAt(i);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a search criteria.");
             }
         }
-        private void OnQuitApplication()
+        private void OnEditEpisode(object parameter)
+        {
+            string commandParameter = parameter.ToString();
+
+            if (commandParameter == "SAVE")
+            {
+                if (EpisodeToEdit != null)
+                {
+                    Episode episodeToDelete = SelectedEpisode;
+                    Episodes.Add(EpisodeToEdit);
+                    SelectedEpisode = EpisodeToEdit;
+                    Episodes.Remove(episodeToDelete);
+
+                    EpisodeOperationFeedback = "Episode Updated";
+                }
+            }
+            else if (commandParameter == "CANCEL")
+            {
+                EpisodeToEdit = SelectedEpisode.Copy();
+                EpisodeOperationFeedback = "Episode Update Canceled";
+            }
+            else
+            {
+                throw new ArgumentException($"{commandParameter} is not a valid command parameter for the adding widgets.");
+            }
+        }
+        private void OnAddEpisode(object parameter)
+        {
+            string commandParameter = parameter.ToString();
+
+            if (commandParameter == "SAVE")
+            {
+                if (EpisodeToAdd != null)
+                {
+                    Episodes.Add(EpisodeToAdd);
+                    EpisodeOperationFeedback = "New Episode Added";
+                    SelectedEpisode = EpisodeToAdd;
+                }
+            }
+            else if (commandParameter == "CANCEL")
+            {
+                EpisodeOperationFeedback = "New Episode Canceled";
+            }
+            else
+            {
+                throw new ArgumentException($"{commandParameter} is not a valid command parameter for the adding widgets.");
+            }
+            EpisodeToAdd = new Episode();
+        }
+
+        private void OnDeleteEpisode(object parameter)
+        {
+            if (SelectedEpisode != null)
+            {
+                string episodeName = SelectedEpisode.Name;
+
+                MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete the {episodeName} widgets from inventory?", "Delete Widgets", MessageBoxButton.YesNo);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        Episodes.Remove(SelectedEpisode);
+                        EpisodeOperationFeedback = "Episode Deleted";
+
+                        if (Episodes.Any()) SelectedEpisode = Episodes[0];
+                        break;
+
+                    case MessageBoxResult.No:
+                        EpisodeOperationFeedback = "Episode Deletion Canceled";
+                        break;
+                }
+            }
+        }
+        private void OnQuitApplication(object parameter)
         {
             //
             // call a house keeping method in the business class
             //
             System.Environment.Exit(1);
         }
-        private void OnSortListByDirector()
+        private void OnSortAsc(object parameter)
         {
-            _episodes = new ObservableCollection<Episode>(_episodes.OrderBy(c => c.Director));
+            Episodes = new ObservableCollection<Episode>(_episodes.OrderBy(x => x.EpisodeNumber));
         }
-        #endregion
-        public  JessViewModel()
+        private void OnSortDirector(object parameter)
         {
-            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-            if (Episodes.Any()) SelectedEpisode = Episodes[0];
-       }
-       
- 
+            Episodes = new ObservableCollection<Episode>(_episodes.OrderBy(x => x.Director));
+        }
+
+        #endregion
+
     }
 }
