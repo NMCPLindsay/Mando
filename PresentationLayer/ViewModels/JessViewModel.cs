@@ -11,7 +11,7 @@ using MandalorianDB.BusinessLayer;
 using MandalorianDB.DataLayer;
 using MandalorianDB.Model;
 
-namespace MandalorianDB.ViewModel
+namespace MandalorianDB.PresentationLayer.ViewModel
 {
 
 
