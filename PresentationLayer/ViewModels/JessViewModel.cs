@@ -9,13 +9,14 @@ using System.Windows;
 using System.Windows.Input;
 using MandalorianDB.BusinessLayer;
 using MandalorianDB.DataLayer;
-using MandalorianDB.Model;
+using MandalorianDB.Models;
+using MandalorianDB.PresentationLayer.Views;
 
-namespace MandalorianDB.PresentationLayer.ViewModel
+namespace MandalorianDB.PresentationLayer.ViewModels
 {
 
 
-    class JessViewModel : ObservableObject
+    public class JessViewModel : ObservableObject
     {
 
         #region Commands
@@ -166,7 +167,7 @@ namespace MandalorianDB.PresentationLayer.ViewModel
             }
             else if (commandParameter == "CANCEL")
             {
-                EpisodeToEdit = SelectedEpisode.Copy();
+                //EpisodeToEdit = SelectedEpisode.Copy();
                 EpisodeOperationFeedback = "Episode Update Canceled";
             }
             else
