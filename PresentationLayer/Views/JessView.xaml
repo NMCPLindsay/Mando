@@ -1,16 +1,16 @@
-﻿<Window x:Class="MandalorianDB.PresentationLayer.Views.JessView"
+﻿<Window x:Class="MandalorianDB.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local1="clr-namespace:MandalorianDB.PresentationLayer.ViewModels"
-        xmlns:local="clr-namespace:MandalorianDB.PresentationLayer.Views"
+        xmlns:local="clr-namespace:MandalorianDB"
+        xmlns:local1="clr-namespace:MandalorianDB.ViewModel"
         mc:Ignorable="d"
         Title="The Mandalorian" 
         Height="600" Width="800"
         Background="LightBlue"
-        
-        
+        ResizeMode="NoResize"
+        WindowStyle="None"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="HeaderStyle" TargetType="Label">
@@ -67,202 +67,233 @@
         <local1:JessViewModel/>
     </Window.DataContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="520"/>
-        </Grid.RowDefinitions>
-        <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Center"
-                Grid.Row="0">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="60"/>
+      <RowDefinition Height="520"/>
+    </Grid.RowDefinitions>
+    <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            Grid.Row="0">
 
-            <Label
-                Style="{StaticResource HeaderStyle}"
-                HorizontalAlignment="Center"
-                Content="The Mandalorian Series"/>
+      <Label
+          Style="{StaticResource HeaderStyle}"
+          HorizontalAlignment="Center"
+          Content="The Mandalorian Series"/>
 
-            <Button
-                  x:Name="Button_Quit"
-                  Width="75"
-                  Height="40"
-                  Margin="400,20,0,0"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Top"           
-                  FontSize="20"
-                  Content="Quit"
-                  Style="{StaticResource ButtonStyle}"
-                  Command="{Binding Path=QuitApplicationCommand}"/>
+      <Button
+            x:Name="Button_Quit"
+            Width="75"
+            Height="40"
+            Margin="400,20,0,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            FontSize="20"
+            Content="Quit"
+            Style="{StaticResource ButtonStyle}"
+            Command="{Binding Path=QuitApplicationCommand}"/>
+    </StackPanel>
+    <Grid
+        Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="191*"/>
+        <ColumnDefinition Width="75*"/>
+        <ColumnDefinition Width="150*"/>
+      </Grid.ColumnDefinitions>
+      <StackPanel
+          Grid.Column="0"
+          Orientation="Vertical"
+          Margin="20,10,10,20">
+        <StackPanel Orientation="Horizontal">
+          <Label Content="Search By" Style="{StaticResource MasterLabelTextStyle}"/>
         </StackPanel>
-        <Grid
-            Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="191*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="150*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel
-                Grid.Column="0"
-                Orientation="Vertical"
-                Margin="20,10,10,20">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Search By" Style="{StaticResource MasterLabelTextStyle}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Episode Number:" Style="{StaticResource MasterLabelTextStyle}"/>
-                    <TextBox  Style="{StaticResource DetailTextBoxStyle1}"/>
-                    <Button
+        <StackPanel Orientation="Horizontal">
+          <Label Content="Writer:" Style="{StaticResource MasterLabelTextStyle}"/>
+          <TextBox  Style="{StaticResource DetailTextBoxStyle1}"/>
+          <Button
                        
-                  x:Name="Button_Search"
-                  Width="75"
-                  Height="40"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Top"           
-                  FontSize="15"
-                  Content="Search"
-                  Style="{StaticResource ButtonStyle}"
-                  Command="{Binding SearchEpisodeCommand}" RenderTransformOrigin="0.5,-0.5"/>
-                </StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0"
-                        Margin="20,0,0,0"
-                        Orientation="Vertical">
-                        <Label Content="Sort By:" Style="{StaticResource MasterLabelTextStyle}"/>
-                        <RadioButton 
-                            Name="RadioButton_EpisodeSort"
-                            Content="Episode"
-                            Style="{StaticResource RadioButtonStyle}"
-                            IsChecked="True"/>
-                        <RadioButton 
-                            Name="RadioButton_DirectorSort"
-                            Content="Director"
-                            Style="{StaticResource RadioButtonStyle}"/>
-                    </StackPanel>
-                </Grid>
-                <Grid Height="350">
-                    <ListBox
-                        x:Name="_master"
-                        Grid.Column="0"
-                        Margin="10,10,10,10"
-                        BorderThickness="2"
-                        ItemsSource="{Binding Path=Episodes}"
-                        SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"
-                        IsSynchronizedWithCurrentItem="True"
-                        ScrollViewer.VerticalScrollBarVisibility="Visible">
-
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel
-                                Orientation="Horizontal">
-                                    <Label
-                                        Content="{Binding EpisodeNumber}"
-                                        Width="30"                                
-                                        Style="{StaticResource MasterLabelTextStyle}"/>
-                                    
-                                    <Label
-                                         Content="{Binding Name}"
-                                         Padding="0,6"
-                                        Style="{StaticResource MasterLabelTextStyle}"/>
-                                                                                                     </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-            </StackPanel>
-            <StackPanel
-                Grid.Column="1"
-                Orientation="Vertical" Grid.ColumnSpan="2">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=" *"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel
-                     Grid.Column="1"
-                     Margin="10,10,10,10"
-                     Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Episode Name:    " Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox Text="{Binding SelectedEpisode.Name}" Style="{StaticResource DetailTextBoxStyle}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Episode Number:" Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox Text="{Binding SelectedEpisode.EpisodeNumber}" Style="{StaticResource DetailTextBoxStyle}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Episode Writer:   " Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox Text="{Binding SelectedEpisode.Writer}" Style="{StaticResource DetailTextBoxStyle}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Episode Director:" Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox Text="{Binding SelectedEpisode.Director}" Style="{StaticResource DetailTextBoxStyle}"/>
-                        </StackPanel>
-                        <StackPanel>
-                           <StackPanel Orientation="Horizontal">
-                                <Label Content="Characters:" Style="{StaticResource DetailLabelStyle}"/>
-                                <ListBox Margin="30,10,59,10" ItemsSource="{Binding SelectedEpisode.Characters}" 
-                                         MaxHeight="75"
-                                         MinHeight="25" 
-                                         Width="170"/>
-
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical">
-                            <Label Content="Discription:" Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox
-                                HorizontalAlignment="Left"
-                                Width="270"
-                                Height="190"
-                                TextWrapping="Wrap"
-                                VerticalAlignment="Top"
-                                
-                                 ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                Text="{Binding SelectedEpisode.EpisodeDetails}"
-                               Style="{StaticResource DetailTextBoxStyle}" Margin="0,0,-1,0"/>
-
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-                <StackPanel 
-                    Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right">
-                    <Button 
-                        x:Name="Button_Add" 
-                        Width="75"
-                        Height="40"
-                        Margin="10,10,10,10"
-                        VerticalAlignment="Center"           
-                        FontSize="20"
-                        Content="Add"
-                        Style="{StaticResource ButtonStyle}"
-                        Command="{Binding Path=AddCharacterCommand}"/>
-                    <Button 
-                        x:Name="Button_Edit" 
-                        Width="75"
-                        Height="40"
-                        Margin="10,10,10,10"
-                        VerticalAlignment="Center"           
-                        FontSize="20"
-                        Content="Edit"
-                        Style="{StaticResource ButtonStyle}"
-                        Command="{Binding Path=EditCharacterCommand}"/>
-                    <Button 
-                        x:Name="Button_Delete" 
-                        Width="75"
-                        Height="40"
-                        Margin="10,10,10,10"
-                        VerticalAlignment="Center"           
-                        FontSize="20"
-                        Content="Delete"
-                        Style="{StaticResource ButtonStyle}"
-                        Command="{Binding Path=DeleteCharacterCommand}"/>
-                </StackPanel>
-            </StackPanel>
+        x:Name="Button_Search"
+        Width="75"
+        Height="40"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        FontSize="15"
+        Content="Search"
+        Style="{StaticResource ButtonStyle}"
+        Command="{Binding Path= ButtonSearchCommand}" RenderTransformOrigin="0.5,-0.5"/>
+        </StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <StackPanel Grid.Column="0"
+              Margin="20,0,0,0"
+              Orientation="Vertical">
+            <Label Content="Sort By:" Style="{StaticResource MasterLabelTextStyle}"/>
+            <RadioButton
+                Name="RadioButton_EpisodeSort"
+                Content="Episode"
+                Style="{StaticResource RadioButtonStyle}"
+                Command="{Binding Episodes}"
+                IsChecked="True"/>
+            <RadioButton
+                Name="RadioButton_DirectorSort"
+                Content="Director"
+                Command="{Binding Episodes}"
+                Style="{StaticResource RadioButtonStyle}"/>
+          </StackPanel>
         </Grid>
+        <Grid Height="300">
+          <ListBox
+              x:Name="_master"
+              Grid.Column="0"
+              Margin="10,10,10,10"
+              BorderThickness="2"
+              ItemsSource="{Binding Path=Episodes}"
+              SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"
+              IsSynchronizedWithCurrentItem="True"
+              ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+
+                <StackPanel
+                Orientation="Horizontal">
+                  <Label
+                      Content="{Binding EpisodeNumber}"
+                      Width="30"
+                      Style="{StaticResource MasterLabelTextStyle}"/>
+
+                  <Label
+                       Content="{Binding Name}"
+                       Padding="0,6"
+                      Style="{StaticResource MasterLabelTextStyle}"/>
+
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </Grid>
+        <StackPanel Grid.Row="2"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
+          <Button
+              x:Name="Button_Save"
+              Width="75"
+              Height="40"
+              Margin="10,10,10,10"
+              VerticalAlignment="Center"
+              FontSize="20"
+              Content="Save"
+              Style="{StaticResource ButtonStyle}"
+                       
+              CommandParameter="Save"/>
+          <Button
+              x:Name="Button_Cancel"
+              Width="75"
+              Height="40"
+              Margin="10,10,10,10"
+              VerticalAlignment="Center"
+              FontSize="20"
+              Content="Cancel"
+              Style="{StaticResource ButtonStyle}"
+                        
+              CommandParameter="CANCEL"/>
+        </StackPanel>
+      </StackPanel>
+      <StackPanel
+          Grid.Column="1"
+          Orientation="Vertical" Grid.ColumnSpan="2">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=" *"/>
+            <ColumnDefinition Width="2*"/>
+          </Grid.ColumnDefinitions>
+          <StackPanel
+           Grid.Column="1"
+           Margin="10,10,10,10"
+           Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+              <Label Content="Episode Name:    " Style="{StaticResource DetailLabelStyle}"/>
+              <TextBox Text="{Binding SelectedEpisode.Name}" Style="{StaticResource DetailTextBoxStyle}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <Label Content="Episode Number:" Style="{StaticResource DetailLabelStyle}"/>
+              <TextBox Text="{Binding SelectedEpisode.EpisodeNumber}" Style="{StaticResource DetailTextBoxStyle}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <Label Content="Episode Writer:   " Style="{StaticResource DetailLabelStyle}"/>
+              <TextBox Text="{Binding SelectedEpisode.Writer}" Style="{StaticResource DetailTextBoxStyle}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <Label Content="Episode Director:" Style="{StaticResource DetailLabelStyle}"/>
+              <TextBox Text="{Binding SelectedEpisode.Director}" Style="{StaticResource DetailTextBoxStyle}"/>
+            </StackPanel>
+            <StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <Label Content="Characters:" Style="{StaticResource DetailLabelStyle}"/>
+                <ListBox Margin="30,10,59,10" ItemsSource="{Binding SelectedEpisode.Characters}"
+                         MaxHeight="75"
+                         MinHeight="25"
+                         Width="170"/>
+
+              </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+              <Label Content="Discription:" Style="{StaticResource DetailLabelStyle}"/>
+              <TextBox
+                  HorizontalAlignment="Left"
+                  Width="270"
+                  Height="190"
+                  TextWrapping="Wrap"
+                  VerticalAlignment="Top"
+                                
+                   ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  Text="{Binding SelectedEpisode.EpisodeDetails}"
+                 Style="{StaticResource DetailTextBoxStyle}" Margin="0,0,-1,0"/>
+
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+        <StackPanel
+            Grid.Row="2"
+            Orientation="Horizontal"
+            HorizontalAlignment="Right">
+          <Button
+              x:Name="Button_Add"
+              Width="75"
+              Height="40"
+              Margin="10,10,10,10"
+              VerticalAlignment="Center"
+              FontSize="20"
+              Content="Add"
+              Style="{StaticResource ButtonStyle}"
+              Command="{Binding Path=AddEpisodeCommand}"/>
+          <Button
+              x:Name="Button_Edit"
+              Width="75"
+              Height="40"
+              Margin="10,10,10,10"
+              VerticalAlignment="Center"
+              FontSize="20"
+              Content="Edit"
+              Style="{StaticResource ButtonStyle}"
+              Command="{Binding Path=EditEpisodeCommand}"/>
+          <Button
+              x:Name="Button_Delete"
+              Width="75"
+              Height="40"
+              Margin="10,10,10,10"
+              VerticalAlignment="Center"
+              FontSize="20"
+              Content="Delete"
+              Style="{StaticResource ButtonStyle}"
+              Command="{Binding Path=DeleteEpisodeCommand}"/>
+
+        </StackPanel>
+      </StackPanel>
     </Grid>
+  </Grid>
 </Window>
