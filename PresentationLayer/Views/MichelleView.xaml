@@ -38,7 +38,7 @@
         <Grid Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <TextBox Name="Search" FontFamily="Permanent Marker" Text=" " Margin="40,0,0,0" VerticalAlignment="Center" TextAlignment="Center" Foreground="Black" Background="White" Width="100" Height="20" />
-                <Button Content="Search"  Command="{Binding ButtonSearchCommand}" CommandParameter="{Binding ElementName=Search}" Style="{StaticResource ButtonStyleSmall}"/>
+                <Button Content="Search"  Command="{Binding ButtonSearchCommand}" CommandParameter="{Binding ElementName=TBoxSearch}" Style="{StaticResource ButtonStyleSmall}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <RadioButton FontFamily="Permanent Marker" Margin="5,0,0,10" Content="Director" Command="{Binding RadioCommandSearchCrit}" CommandParameter="Director"/>
@@ -94,12 +94,12 @@
             <TextBlock Text="{Binding SelectedEpisode.Writer}"  Margin="0,0,30,0"  HorizontalAlignment="Right" TextAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="200" Height="40"  FontFamily="Permanent Marker" Opacity=".9"/>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="2">
-            <Label Content="Characters: " Margin="0,20,0,0" Foreground="Black" FontFamily="Permanent Marker"/>
-            <ListBox ItemsSource="{Binding Path=SelectedEpisode.Characters}" HorizontalAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="400" Height="50" Margin="20,0,0,0" FontFamily="Permanent Marker" Opacity=".9"/>
+            <Label Content="Characters: " Margin="0,-19,-0.2,38.6" Foreground="Black" FontFamily="Permanent Marker"/>
+            <ListBox ItemsSource="{Binding Path=SelectedEpisode.Characters}" HorizontalAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="400" Height="50" Margin="79,-17,49.8,36.6" FontFamily="Permanent Marker" Opacity=".9"/>
         </Grid>
         <Grid Grid.Row="4" Grid.Column="2">
-            <Label Content="Description: " Margin="0,20,0,0" Foreground="Black" FontFamily="Permanent Marker"/>
-            <TextBlock Text="{Binding SelectedEpisode.EpisodeDetails}" HorizontalAlignment="Center" TextAlignment="Center" Foreground="DarkGoldenrod" Background="White" Width="400" Height="50" Margin="20,0,0,0" FontFamily="Permanent Marker" Opacity=".9"/>
+            <Label Content="Description: " Margin="0,-36,-0.2,56.4" Foreground="Black" FontFamily="Permanent Marker"/>
+            <TextBox Text="{Binding SelectedEpisode.EpisodeDetails}" HorizontalAlignment="Center" Foreground="DarkGoldenrod" Background="White" MaxWidth="400" TextWrapping="WrapWithOverflow" Height="Auto" Margin="79,-30,51.8,10.4" FontFamily="Permanent Marker" FontSize="12" Opacity=".9"/>
         </Grid>
     </Grid>
 </Window>
