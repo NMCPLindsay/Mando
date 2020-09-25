@@ -8,7 +8,7 @@ using MandalorianDB.DataLayer;
 using System.Collections.Generic;
 using MandalorianDB.PresentationLayer.Views;
 
-namespace MandalorianDB.PresentationLayerViewModel
+namespace MandalorianDB.PresentationLayer.ViewModel
 {
 
     class JessViewModel : ObservableObject
