@@ -7,11 +7,12 @@ using MandalorianDB.BusinessLayer;
 using MandalorianDB.DataLayer;
 using System.Collections.Generic;
 using MandalorianDB.PresentationLayer.Views;
+using MandalorianDB.Models;
 
-namespace MandalorianDB.PresentationLayer.ViewModel
+namespace MandalorianDB.PresentationLayer.ViewModels
 {
 
-    class JessViewModel : ObservableObject
+    public class JessViewModel : ObservableObject
     {
 
         #region Commands
