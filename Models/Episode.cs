@@ -17,7 +17,7 @@ namespace MandalorianDB.Models
         private string _episodeDetails;
         private string _director;
         private string _writer;
-            
+        public int Id { get; set; }
         public string Writer
         {
             get { return _writer; }

@@ -122,8 +122,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BusinessLayer\EpisodeBusiness.cs" />
+    <Compile Include="BusinessLayer\EpisodeReopsitory.cs" />
+    <Compile Include="BusinessLayer\IDataService.cs" />
+    <Compile Include="BusinessLayer\IEpisodeRepository.cs" />
     <Compile Include="BusinessLayer\ObservableObject.cs" />
     <Compile Include="BusinessLayer\RelayCommand.cs" />
+    <Compile Include="DataLayer\DataServiceMongoDb.cs" />
+    <Compile Include="DataLayer\MongoDbDataSettings.cs" />
+    <Compile Include="DataLayer\MongoDBUtilities.cs" />
     <Compile Include="DataLayer\SessionData.cs" />
     <Page Include="PresentationLayer\Views\JessView.xaml">
       <SubType>Designer</SubType>

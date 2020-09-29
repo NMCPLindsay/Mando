@@ -57,13 +57,18 @@ namespace MandalorianDB.PresentationLayer
             if (NewChars.Any()) SelectedChar = NewChars[0];
             CommandAddChar = new RelayCommand(new Action<object>(AddChar));
            // CommandDelChar = new RelayCommand(new Action<object>(DelChar));
-           // CommandSaveEpisode = new RelayCommand(new Action<object>(SaveEpisode));
+            CommandSaveEpisode = new RelayCommand(new Action<object>(SaveEpisode));
            // CommandCancel = new RelayCommand(new Action<object>(Cancel));
         }
 
-        private void AddChar(object obj)
+        private void SaveEpisode(object parameter)
         {
+            
+        }
 
+        private void AddChar(object parameter)
+        {
+            
             Window window = new PhilAddCharView();
             window.Show();
 

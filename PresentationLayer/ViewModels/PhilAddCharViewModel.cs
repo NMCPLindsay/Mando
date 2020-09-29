@@ -17,10 +17,15 @@ using System.Net.NetworkInformation;
 
 namespace MandalorianDB.PresentationLayer.ViewModels
 {
-    public class PhilAddCharViewModel :ObservableObject
+    public class PhilAddCharViewModel : ObservableObject
     {
-        public int MyProperty { get; set; }
+        public ICommand AddToList { get; set; }
         public PhilAddCharViewModel()
+        {
+            AddToList = new RelayCommand(Action<object>(AddToList));
+        }
+
+        private void AddToList(object parameter)
         {
 
         }

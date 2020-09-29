@@ -96,7 +96,7 @@ namespace MandalorianDB.PresentationLayer
             Episode newEpisode = new Episode();
             Window window = new PhilAddView();
             window.Show();
-           
+                       
         }
 
         private void SetSearchCriteria(object parameter)
