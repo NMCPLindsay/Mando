@@ -67,7 +67,6 @@
     <Window.DataContext>
         <local1:JessViewModel/>
     </Window.DataContext>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -143,7 +142,7 @@
                             Text="{Binding MinEpisodeText}"/>
                         <Label Content="Max Episode:" Style="{StaticResource MasterLabelTextStyle}"/>
                         <TextBox
-                            Name="TextBox_Episode"
+                            Name="TextBox_MaxEp"
                             Width="40"
                             Text="{Binding MaxEpisodeText}"/>
                         <Button 
@@ -162,53 +161,65 @@
                         Margin="20,0,0,0"
                         Orientation="Horizontal">
                         <Label Content="Sort by:" Style="{StaticResource MasterLabelTextStyle}"/>
+                        <!--TODO Velis-->
                         <RadioButton 
                             Name="RadioButton_EpisodeAsc"
                             Margin="20,5,0,0"
                             Content="Episode"
                             Style="{StaticResource RadioButtonStyle}"
-                            Command="{Binding Path=RadioCommandSortAsc}"
+                            Command="{Binding Path=RadioCommandSortEpisodeList}"
                             CommandParameter="Episode"
                             IsChecked="True"/>
+                        <!--TODO Velis-->
                         <RadioButton 
                             Name="RadioButton_DirectorSort"
                             Margin="20,5,0,0"
                             Content="Director"
                             Style="{StaticResource RadioButtonStyle}"
-                            Command="{Binding Path=RadioCommandSortDirector}"
+                            Command="{Binding Path=RadioCommandSortEpisodeList}"
                             CommandParameter="Director"/>
-
+                        <Button
+                            x:Name="Button_ResetList"
+                            Width="40"
+                            Height="20"
+                            Margin="30,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="10"
+                            Content="Reset"
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding Path=ResetEpisodeListCommand}"/>
                     </StackPanel>
                 </Grid>
                 <Grid Height="350" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="93*"/>
-                        <ColumnDefinition Width="47*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="19*"/>
+                        <ColumnDefinition Width="0*"/>
                     </Grid.ColumnDefinitions>
                     <ListBox
                         x:Name="_master"
                         Grid.Column="0"
-                        Margin="10,10,10,10"
+                        Margin="10,10,10.2,10"
                         BorderThickness="2"
                         ItemsSource="{Binding Path=Episodes}"
                         SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"
                         IsSynchronizedWithCurrentItem="True"
-                        ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="2">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel 
                                     Orientation="Vertical">
                                     <StackPanel
-                                Orientation="Horizontal">
+                                        Orientation="Horizontal">
+                                        
                                         <Label
-                                        Content="{Binding EpisodeNumber}"
-                                        Width="30"                                
-                                        Style="{StaticResource MasterLabelTextStyle}"/>
-
+                                            Content="{Binding EpisodeNumber}"
+                                            Width="30"                                
+                                            Style="{StaticResource MasterLabelTextStyle}"/>
                                         <Label
-                                         Content="{Binding Name}"
-                                         Padding="0,6"
-                                        Style="{StaticResource MasterLabelTextStyle}"/>
+                                             Content="{Binding Name}"
+                                             Padding="0,6"
+                                            Style="{StaticResource MasterLabelTextStyle}"/>
 
                                     </StackPanel>
                                 </StackPanel>
@@ -342,5 +353,7 @@
             </StackPanel>
         </Grid>
     </Grid>
+    
+
 
 </Window>
