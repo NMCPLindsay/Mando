@@ -12,7 +12,7 @@ using MandalorianDB.Models;
 namespace MandalorianDB.PresentationLayer.ViewModels
 {
 
-    public class JessViewModel : ObservableObject
+    class JessViewModel : ObservableObject
     {
 
         #region Commands
@@ -24,11 +24,13 @@ namespace MandalorianDB.PresentationLayer.ViewModels
 
         public ICommand QuitApplicationCommand { get; set; }
 
-        public ICommand RadioCommandSortAsc { get; set; }
-
-        public ICommand RadioCommandSortDirector { get; set; }
+        public ICommand EpisodeFilterListCommand { get; set; }
+        // TODO Velis
+        public ICommand RadioCommandSortEpisodeList { get; set; }
 
         public ICommand ButtonSearchCommand { get; set; }
+
+        public ICommand ResetEpisodeListCommand { get; set; }
 
         #endregion
 
@@ -36,16 +38,16 @@ namespace MandalorianDB.PresentationLayer.ViewModels
         private ObservableCollection<Episode> _episodes;
         private Episode _selectedEpisode;
         private Episode _episodeToAdd;
-       
+
         private string _episodeOperationFeedback;
-        
+
         private Episode _episodeToEdit;
         private string _searchText;
         private string _minEpisodeText;
         private string _maxEpisodeText;
 
         #endregion
-        
+
         #region Properties
 
         public string SearchText
@@ -99,7 +101,11 @@ namespace MandalorianDB.PresentationLayer.ViewModels
         public ObservableCollection<Episode> Episodes
         {
             get { return _episodes; }
-            set { _episodes = value; }
+            set
+            {
+                _episodes = value;
+                OnPropertyChanged(nameof(Episodes));
+            }
         }
 
         public Episode SelectedEpisode
@@ -132,17 +138,25 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             if (Episodes.Any()) SelectedEpisode = Episodes[0];
 
             AddEpisodeCommand = new RelayCommand(new Action<object>(OnAddEpisode));
-            EditEpisodeCommand  = new RelayCommand(new Action<object>(OnEditEpisode));
-            RadioCommandSortAsc = new RelayCommand(new Action<object>(OnSortAsc));
-            RadioCommandSortDirector = new RelayCommand(new Action<object>(OnSortDirector));
+            EditEpisodeCommand = new RelayCommand(new Action<object>(OnEditEpisode));
+            // TODO Velis
+            RadioCommandSortEpisodeList = new RelayCommand(new Action<object>(SortEpisodeList));
             ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
             QuitApplicationCommand = new RelayCommand(new Action<object>(OnQuitApplication));
             DeleteEpisodeCommand = new RelayCommand(new Action<object>(OnDeleteEpisode));
+            EpisodeFilterListCommand = new RelayCommand(new Action<object>(OnEpisodeFilterEpisodeList));
+            ResetEpisodeListCommand = new RelayCommand(new Action<object>(OnResetList));
         }
-         
-        #endregion
-       
-       
+        private void OnResetList(Object parameter)
+        {
+            // reseting filters
+            SearchText = "";
+            MinEpisodeText = "";
+            MaxEpisodeText = "";
+            _episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+
+            Episodes = _episodes;
+        }
         private void Search(object parameter)
         {
             //reset filter
@@ -151,20 +165,21 @@ namespace MandalorianDB.PresentationLayer.ViewModels
 
             Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
 
-            _episodes = new ObservableCollection<Episode>(_episodes.Where(x => x.Writer.ToLower().Contains(_searchText)));
+            Episodes = new ObservableCollection<Episode>(_episodes.Where(x => x.Writer.ToLower().Contains(_searchText)));
 
-            }
-           
-        private void OnEpisodeFilterEpisodeList()
+        }
+
+        private void OnEpisodeFilterEpisodeList(object parameter)
         {
             //reset search
             SearchText = "";
             Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-            if(int.TryParse(MinEpisodeText, out int minEpisode) && int.TryParse(MaxEpisodeText,out int maxEpisode))
-            {
-                
 
-                Episodes = new ObservableCollection<Episode>(Episodes.Where(x => x.EpisodeNumber >= minEpisode && x.EpisodeNumber <= maxEpisode));
+
+            if (int.TryParse(MinEpisodeText, out int minEpisode) && int.TryParse(MaxEpisodeText, out int maxEpisode))
+            {
+
+                Episodes = new ObservableCollection<Episode>(_episodes.Where(x => x.EpisodeNumber >= minEpisode && x.EpisodeNumber <= maxEpisode));
             }
         }
         private void OnEditEpisode(object parameter)
@@ -185,7 +200,7 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             }
             else if (commandParameter == "CANCEL")
             {
-               // EpisodeToEdit = SelectedEpisode.Copy();
+                // EpisodeToEdit = SelectedEpisode.Copy();
                 EpisodeOperationFeedback = "Episode Update Canceled";
             }
             else
@@ -201,7 +216,7 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             {
                 if (EpisodeToAdd != null)
                 {
-                   Episodes.Add(EpisodeToAdd);
+                    Episodes.Add(EpisodeToAdd);
                     EpisodeOperationFeedback = "New Episode Added";
                     SelectedEpisode = EpisodeToAdd;
                 }
@@ -216,10 +231,10 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             }
             EpisodeToAdd = new Episode();
         }
-    
+
         private void OnDeleteEpisode(object parameter)
         {
-            if ( SelectedEpisode != null)
+            if (SelectedEpisode != null)
             {
                 string episodeName = SelectedEpisode.Name;
 
@@ -247,14 +262,27 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             //
             System.Environment.Exit(1);
         }
-        private void OnSortAsc(object parameter)
-        {
-            Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.EpisodeNumber));
-        }
-        private void OnSortDirector(object parameter)
-        {
-            Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.Director));
-        }
 
+        // TODO Velis
+        private void SortEpisodeList(object parameter)
+        {
+            string sortType = parameter.ToString();
+            switch (sortType)
+            {
+                case "Director":
+                    Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.Director));
+                    break;
+
+                case "Episode":
+                    Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.EpisodeNumber));
+                    break;
+
+                default:
+
+                    break;
+            }
+
+        }
+        #endregion
     }
 }
