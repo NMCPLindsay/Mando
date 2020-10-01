@@ -1,141 +1,218 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
-using System.Windows;
-using MandalorianDB.DataLayer;
-using MandalorianDB.Models;
-using MandalorianDB.BusinessLayer;
-using System.Windows.Controls;
-using System.Collections.ObjectModel;
-
-namespace MandalorianDB.PresentationLayer
+﻿namespace MandalorianDB.PresentationLayer
 {
+    #region USINGS
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+
+    using MandalorianDB.BusinessLayer;
+    using MandalorianDB.DataLayer;
+    using MandalorianDB.Models;
+    using MandalorianDB.PresentationLayer.ViewModels;
+    using MandalorianDB.PresentationLayer.Views;
+    #endregion
+
     public class MichelleViewModel : ObservableObject
     {
-        private ObservableCollection<Episode> _episodes;
-        private string _criteriaFilter;
-
-        public string CriteriaFilter
+        #region CONSTRUCTOR
+        public MichelleViewModel()
         {
-            get { return _criteriaFilter; }
-            set { _criteriaFilter = value; }
+            this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+                            
+            this.ButtonAddCommand = new RelayCommand(this.AddEpisode);
+            this.ButtonEditCommand = new RelayCommand(this.EditEpisode);
+            this.ButtonDeleteCommand = new RelayCommand(this.DeleteEpisode);
+            this.SelectedFilterCommand = new RelayCommand(this.SetFilter);
+            this.RadioCommandSortAsc = new RelayCommand(this.SortAsc);
+            this.RadioCommandSortDesc = new RelayCommand(this.SortDesc);
+            this.RadioCommandSearchCrit = new RelayCommand(this.SetSearchCriteria);
+            this.ButtonSearchCommand = new RelayCommand(this.Search);
         }
+        #endregion
+
+        #region INTERFACES
+        public ICommand ButtonAddCommand { get; set; }
+        public ICommand ButtonEditCommand { get; set; }
+        public ICommand ButtonDeleteCommand { get; set; }
+        public ICommand SelectedFilterCommand { get; set; }
+        public ICommand ButtonSearchCommand { get; set; }
+        public ICommand RadioCommandSortAsc { get; set; }
+        public ICommand RadioCommandSortDesc { get; set; }
+        public ICommand RadioCommandSearchCrit { get; set; }
+        #endregion
+
+        private ObservableCollection<Episode> _episodes;
+
+        private string _criteriaFilter;
+        private ComboBoxItem _selectedFilter;
+        private Episode _selectedEpisode;
 
         public ObservableCollection<Episode> Episodes
         {
             get { return _episodes; }
             set
             {
-                _episodes = value;
-                OnPropertyChanged(nameof(Episodes));
+                this._episodes = value;
+                this.OnPropertyChanged(nameof(Episodes));
             }
         }
-        private Episode _selectedEpisode;
-        private string _searchName;
 
-        public string SearchName
+        public string CriteriaFilter
         {
-            get { return _searchName; }
+            get { return _criteriaFilter; }
+            set { _criteriaFilter = value; }
+        }
+        public string SearchName { get; set; }
+        public System.Windows.Controls.ComboBoxItem SelectedFilter
+        {
+            get => this._selectedFilter;
             set
             {
-                _searchName = value;
-                ;
+                this._selectedFilter = value;
+                this.SetFilter(value);
             }
         }
+
         public Episode SelectedEpisode
         {
-            get { return _selectedEpisode; }
+            get => this._selectedEpisode;
             set
             {
-                _selectedEpisode = value;
-                OnPropertyChanged(nameof(SelectedEpisode));
+                this._selectedEpisode = value;
+                this.OnPropertyChanged(nameof(this.SelectedEpisode));
             }
         }
-        public MichelleViewModel()
-        {
-            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
 
-            if (Episodes.Any()) SelectedEpisode = Episodes[0];
-
-            RadioCommandSortAsc = new RelayCommand(new Action<object>(SortAsc));
-            RadioCommandSortDesc = new RelayCommand(new Action<object>(SortDesc));
-            RadioCommandSearchCrit = new RelayCommand(new Action<object>(SetSearchCriteria));
-            ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
-        }
-
+        #region EVENTS
         private void AddEpisode(object parameter)
         {
-            Episode newEpisode = new Episode();
-            Window window = new PhilAddView();
-            window.Show();
+            var mmvm = new MichelleManageViewModel(new Episode());
+            var win = new MichelleManageView { DataContext = mmvm };
 
+            win.Show();
         }
 
-        private void SetSearchCriteria(object parameter)
+        private void EditEpisode(object parameter)
         {
-            CriteriaFilter = parameter.ToString();
+            if (this.SelectedEpisode == null)
+            {
+                MessageBox.Show(
+                    "Please select an episode.",
+                    "Input Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+            }
+            else
+            {
+                var mmvm = new MichelleManageViewModel(this.SelectedEpisode);
+                var win = new MichelleManageView { DataContext = mmvm };
+
+                win.Show();
+            }
+        }
+
+        private void DeleteEpisode(object parameter)
+        {
+            if (parameter == "We made a mistake")
+            {
+                MessageBox.Show("Please select an episode.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure that you want to delete this episode?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    this.Episodes.Remove(parameter as Episode);
+                }
+            }
         }
 
         private void Search(object parameter)
         {
-            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-            SearchName = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
-            if (!(CriteriaFilter is null))
+            this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            this.SearchName = (parameter as TextBox).Text;
+            
+            if (!(this.CriteriaFilter is null))
             {
-                switch (CriteriaFilter.ToUpper())
+                switch (this.CriteriaFilter.ToUpper())
                 {
                     case "DIRECTOR":
-                        for (int i = Episodes.Count - 1; i >= 0; i--)
+                        for (var i = this.Episodes.Count - 1; i >= 0; i--)
                         {
-                            Episode episode = Episodes[i];
-                            if (episode.Director != SearchName)
+                            var episode = this.Episodes[i];
+                            
+                            if (!string.Equals(episode.Director.Trim().ToUpper(), this.SearchName.Trim().ToUpper(), StringComparison.CurrentCultureIgnoreCase))
                             {
-                                Episodes.RemoveAt(i);
+                                this.Episodes.RemoveAt(i);
                             }
                         }
+
                         break;
                     case "WRITER":
-                        for (int i = Episodes.Count - 1; i >= 0; i--)
+                        for (var i = this.Episodes.Count - 1; i >= 0; i--)
                         {
-                            Episode episode = Episodes[i];
-                            if (episode.Writer != SearchName)
+                            var episode = this.Episodes[i];
+
+                            if (!string.Equals(episode.Writer.Trim(), this.SearchName.Trim(), StringComparison.CurrentCultureIgnoreCase))
                             {
-                                Episodes.RemoveAt(i);
+                                this.Episodes.RemoveAt(i);
                             }
                         }
+
                         break;
                     case "CHARACTER":
-                        for (int i = Episodes.Count - 1; i >= 0; i--)
+                        for (var i = this.Episodes.Count - 1; i >= 0; i--)
                         {
-                            Episode episode = Episodes[i];
-                            if (!(episode.Characters.Contains(SearchName)))
+                            var episode = this.Episodes[i];
+
+                            if (!episode.Characters.Contains(this.SearchName))
                             {
-                                Episodes.RemoveAt(i);
+                                this.Episodes.RemoveAt(i);
                             }
                         }
-                        break;
-                    default:
+
                         break;
                 }
             }
         }
 
-        private void SortAsc(object parameter)
+        private void SetFilter(object parameter)
         {
-            Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.EpisodeNumber).ToList());
+            switch (this.SelectedFilter.Content)
+            {
+                case "Director":
+                    this.Episodes = new ObservableCollection<Episode>(this.Episodes.OrderBy(e => e.Director));
+
+                    break;
+                case "Writer":
+                    this.Episodes = new ObservableCollection<Episode>(this.Episodes.OrderBy(e => e.Writer));
+
+                    break;
+                case "Characters":
+                    // NB: It is very odd to order by a list in this way.
+                    // Because you can't order a by a list, convert each list of chars to a csv.
+                    this.Episodes = new ObservableCollection<Episode>(this.Episodes.OrderBy(e => string.Join(",", e.Characters)));
+
+                    break;
+            }
         }
 
+        private void SetSearchCriteria(object parameter)
+        {
+            this.CriteriaFilter = parameter.ToString();
+        }
 
-        public void SortDesc(object parameter)
+        private void SortAsc(object parameter)
+        {
+            this.Episodes = new ObservableCollection<Episode>(Episodes.OrderBy(x => x.EpisodeNumber).ToList());
+        }
+
+        private void SortDesc(object parameter)
         {
             Episodes = new ObservableCollection<Episode>(Episodes.OrderByDescending(x => x.EpisodeNumber).ToList());
         }
-
-        public ICommand ButtonSearchCommand { get; set; }
-        public ICommand RadioCommandSortAsc { get; set; }
-        public ICommand RadioCommandSortDesc { get; set; }
-        public ICommand RadioCommandSearchCrit { get; set; }
+        #endregion
     }
 }
