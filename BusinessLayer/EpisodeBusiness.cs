@@ -174,7 +174,7 @@ namespace MandalorianDB.BusinessLayer
         {
             try
             {
-                if (GetWidget(id) != null)
+                if (GetEpisode(id) != null)
                 {
                     using (EpisodeRepository eRepository = new EpisodeRepository())
                     {
