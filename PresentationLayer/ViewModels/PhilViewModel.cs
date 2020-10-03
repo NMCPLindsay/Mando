@@ -29,6 +29,8 @@ namespace MandalorianDB.PresentationLayer
         public ICommand RadioCommandSortDesc { get; set; }
         public ICommand RadioCommandSearchCrit { get; set; }
 
+        private EpisodeBusiness _episodeBusiness;
+
         private ObservableCollection<Episode> _episodes;
         private string _criteriaFilter;
 
@@ -78,12 +80,13 @@ namespace MandalorianDB.PresentationLayer
         }
         public PhilViewModel()
         {
-            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-            
+            _episodeBusiness = new EpisodeBusiness();
+            Episodes = new ObservableCollection<Episode>(_episodeBusiness.AllEpisodes());
+
             if (Episodes.Any()) SelectedEpisode = Episodes[0];
 
             ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
-           // ButtonEditCommand = new RelayCommand(new Action<object>(EditEpisode));
+            ButtonEditCommand = new RelayCommand(new Action<object>(EditEpisode));
             RadioCommandSortAsc = new RelayCommand(new Action<object>(SortAsc));
             RadioCommandSortDesc = new RelayCommand(new Action<object>(SortDesc));
             RadioCommandSearchCrit = new RelayCommand(new Action<object>(SetSearchCriteria));
@@ -91,12 +94,27 @@ namespace MandalorianDB.PresentationLayer
             ButtonQuitCommmand = new RelayCommand(new Action<object>(QuitApp));
         }
 
+        private void EditEpisode(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
         private void AddEpisode(object parameter)
         {
-            Episode newEpisode = new Episode();
-            Window window = new PhilAddView();
-            window.Show();
-                       
+
+            EpisodeOperation episodeOperation = new EpisodeOperation()
+            {
+                Status = EpisodeOperation.OperationStatus.CANCEL,
+                Episode = new Episode()
+            };
+            Window addEpisodeWindow = new PhilAddView(episodeOperation);
+            addEpisodeWindow.ShowDialog();
+
+            if (episodeOperation.Status != EpisodeOperation.OperationStatus.CANCEL)
+            {
+                Episodes.Add(episodeOperation.Episode);
+            }
+
         }
 
         private void SetSearchCriteria(object parameter)

@@ -16,64 +16,49 @@ namespace MandalorianDB.PresentationLayer
     public class PhilAddViewModel : ObservableObject
     {
 
-        public ICommand CommandAddChar { get; set; }
-        public ICommand CommandDelChar { get; set; }
-        public ICommand CommandSaveEpisode { get; set; }
-        public ICommand CommandCancel { get; set; }
-        private Episode _newEpisode;
-        private ObservableObject _selectedChar;
-        private ObservableCollection<ObservableObject> _newChars;
+        public ICommand ButtonAddCharCommand { get; set; }
+        public ICommand ButtonDelCharCommand { get; set; }
+        public ICommand ButtonAddCommand { get; set; }
+        public ICommand ButtonCancelCommand { get; set; }
+        public Episode NewEpisode { get; set; }
+        private EpisodeOperation _episodeOperation;
+        private string _selectedChar;
 
-        public ObservableCollection<ObservableObject> NewChars
-        {
-            get { return _newChars; }
-            set 
-            { 
-                _newChars = value;
-                OnPropertyChanged(nameof(NewChars));
-            }
-        }
-
-        public ObservableObject SelectedChar
+        public string SelectedChar
         {
             get { return _selectedChar; }
-            set 
-            { 
-                _selectedChar = value; 
-                OnPropertyChanged(nameof(SelectedChar));
+            set { _selectedChar = value;
+                OnPropertyChanged(nameof(SelectedChar)); }
+        }
+
+        public PhilAddViewModel(EpisodeOperation episodeOp)
+        {
+            NewEpisode = episodeOp.Episode;
+            _episodeOperation = episodeOp;
+            ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
+            ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddEpisode));
+        }
+
+        private void CancelAddEpisode(object parameter)
+        {
+            _episodeOperation.Status = EpisodeOperation.OperationStatus.CANCEL;
+
+            if (parameter is System.Windows.Window)
+            {
+                (parameter as System.Windows.Window).Close();
+            }
+        }
+
+        private void AddEpisode(object parameter)
+        {
+            _episodeOperation.Status = EpisodeOperation.OperationStatus.OKAY;
+
+            if (parameter is System.Windows.Window)
+            {
+                (parameter as System.Windows.Window).Close();
             }
         }
 
 
-        public Episode NewEpisode
-        {
-            get { return _newEpisode; }
-            set { _newEpisode = value; }
-        }
-
-        public PhilAddViewModel() 
-        {
-            NewChars = new ObservableCollection<ObservableObject>(); 
-            if (NewChars.Any()) SelectedChar = NewChars[0];
-            CommandAddChar = new RelayCommand(new Action<object>(AddChar));
-           // CommandDelChar = new RelayCommand(new Action<object>(DelChar));
-            CommandSaveEpisode = new RelayCommand(new Action<object>(SaveEpisode));
-           // CommandCancel = new RelayCommand(new Action<object>(Cancel));
-        }
-
-        private void SaveEpisode(object parameter)
-        {
-            
-        }
-
-        private void AddChar(object parameter)
-        {
-            
-            Window window = new PhilAddCharView();
-            window.Show();
-
-        }
-
-        
     }
 }

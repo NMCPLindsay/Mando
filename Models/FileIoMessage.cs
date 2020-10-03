@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace MandalorianDB.Models
 {
-    class EpisodeListOperations
+    public enum FileIoMessage
     {
+        None,
+        Complete,
+        FileAccessError,
+        RecordNotFound,
+        NoRecordsFound
     }
 }

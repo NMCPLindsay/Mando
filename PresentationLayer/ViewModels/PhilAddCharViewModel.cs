@@ -19,12 +19,36 @@ namespace MandalorianDB.PresentationLayer.ViewModels
 {
     public class PhilAddCharViewModel : ObservableObject
     {
-        public ICommand AddToList { get; set; }
-        public PhilAddCharViewModel()
+        public ICommand ButtonAddCommand { get; set; }
+        public ICommand ButtonCancelCommand { get; set; }
+        public Episode Episode { get; set; }
+        private EpisodeOperation _episodeOperation;
+        public PhilAddCharViewModel(EpisodeOperation episodeOp)
         {
-           
+            Episode = episodeOp.Episode;
+            _episodeOperation = episodeOp;
+            ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
+            ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddEpisode));
         }
 
+        private void CancelAddEpisode(object parameter)
+        {
+            _episodeOperation.Status = EpisodeOperation.OperationStatus.CANCEL;
 
+            if (parameter is System.Windows.Window)
+            {
+                (parameter as System.Windows.Window).Close();
+            }
+        }
+
+        private void AddEpisode(object parameter)
+        {
+            _episodeOperation.Status = EpisodeOperation.OperationStatus.OKAY;
+
+            if (parameter is System.Windows.Window)
+            {
+                (parameter as System.Windows.Window).Close();
+            }
+        }
     }
 }
