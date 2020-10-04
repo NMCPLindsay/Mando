@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="Edit Episode" Height="400" Width="300" Background="Black">
     <Window.Resources>
+
+        <Style x:Key="ButtonStyleTiny" TargetType="Button">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Background" Value="Brown"/>
+            <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkOrange"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="TextBoxInput" TargetType="TextBox">
             <Setter Property="MinHeight" Value="10"/>
             <Setter Property="MinWidth" Value="200"/>
@@ -21,6 +34,7 @@
             <Setter Property="MinWidth" Value="150"/>
             <Setter Property="MinHeight" Value="10"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
 
         </Style>
         <Style x:Key="LabelDetail" TargetType="Label">
@@ -48,7 +62,7 @@
             <Setter Property="MaxHeight" Value="100"/>
             <Setter Property="MinHeight" Value="50"/>
             <Setter Property="Width" Value="200"/>
-            <Setter Property="IsReadOnly" Value="True"/>
+
         </Style>
         <Style x:Key="MainListBox" TargetType="ListBox">
             <Setter Property="Foreground" Value="Brown"/>
@@ -74,11 +88,10 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Window.DataContext>
-        <local:PhilEditViewModel/>
-    </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
@@ -90,45 +103,55 @@
 
         <Grid Grid.Row="0" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Episode: " Foreground="CadetBlue"/>
-                <TextBlock Text="Name"  HorizontalAlignment="Center" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                <Label Content="Episode #: " Foreground="CadetBlue"/>
+                <TextBox Name="TBEpNum" Text="{Binding UserEpisode.EpisodeNumber}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
+
         <Grid Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Season: " Foreground="CadetBlue"/>
-                <TextBlock Text="SeasonNumber"  HorizontalAlignment="Right" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                <Label Content="Episode: " Foreground="CadetBlue"/>
+                <TextBox Text="{Binding UserEpisode}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Writer: " Foreground="CadetBlue"/>
-                <TextBlock Text="Writer"  HorizontalAlignment="Right" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                <Label Content="Season: " Foreground="CadetBlue"/>
+                <TextBox  Text="{Binding UserEpisode.SeasonNumber}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Director: " Foreground="CadetBlue"/>
-                <TextBlock Text="Director"  HorizontalAlignment="Right" TextAlignment="Center" Foreground="Brown" Background="White" MinWidth="150" MinHeight="10" Margin="5"/>
+                <Label Content="Writer: " Foreground="CadetBlue"/>
+                <TextBox Text="{Binding UserEpisode.Writer}" Style="{StaticResource TextBoxInput}" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="4" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Characters: " Foreground="CadetBlue"/>
-                <ListBox Margin="10" ItemsSource="{Binding}" MaxHeight="75" MinHeight="25" Width="150" HorizontalAlignment="Right" />
+                <Label Content="Director: " Foreground="CadetBlue"/>
+                <TextBox Text="{Binding UserEpisode.Director}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="5" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Details" Foreground="CadetBlue"/>
-                <RichTextBox Margin="10"  MaxHeight="100" MinHeight="50" Width="200"  />
+                <Label Content="Characters: " Foreground="CadetBlue"/>
+                <ListBox SelectedItem="{Binding SelectedChar}"  ItemsSource="{Binding UserEpisode.Characters}" Style="{StaticResource CharListBox}"/>
+                <Button Style="{StaticResource ButtonStyleTiny}" Content="+" Command="{Binding ButtonAddCharCommand}" CommandParameter="{Binding UserEpisode.Characters}"/>
+                <Button Style="{StaticResource ButtonStyleTiny}" Content="-" Command="{Binding ButtonDelCharCommand}" CommandParameter="{Binding SelectedChar}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="6" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSaveData}" CommandParameter="{Binding Episode}" Content="Save"/>
-                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonCancelData}" CommandParameter="{Binding Episode}" Content="Cancel"/>
+                <Label Content="Details" Foreground="CadetBlue"/>
+                <TextBox Text="{Binding UserEpisode.EpisodeDetails}" Style="{StaticResource TextBoxDetails}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="7" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSaveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Save"/>
+                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonCancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Cancel"/>
             </StackPanel>
         </Grid>
     </Grid>
+
 </Window>

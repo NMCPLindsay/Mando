@@ -80,9 +80,9 @@ namespace MandalorianDB.PresentationLayer
         }
         public PhilViewModel()
         {
-            _episodeBusiness = new EpisodeBusiness();
-            Episodes = new ObservableCollection<Episode>(_episodeBusiness.AllEpisodes());
-
+            //_episodeBusiness = new EpisodeBusiness();
+            //Episodes = new ObservableCollection<Episode>(_episodeBusiness.AllEpisodes());
+            Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
             if (Episodes.Any()) SelectedEpisode = Episodes[0];
 
             ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
@@ -92,11 +92,49 @@ namespace MandalorianDB.PresentationLayer
             RadioCommandSearchCrit = new RelayCommand(new Action<object>(SetSearchCriteria));
             ButtonSearchCommand = new RelayCommand(new Action<object>(Search));
             ButtonQuitCommmand = new RelayCommand(new Action<object>(QuitApp));
+            ButtonDeleteCommand = new RelayCommand(new Action<object>(DeleteEpisode));
         }
 
-        private void EditEpisode(object obj)
+        private void DeleteEpisode(object parameter)
         {
-            throw new NotImplementedException();
+            if (SelectedEpisode != null)
+            {
+                string episodeName = SelectedEpisode.Name;
+
+                MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete the {episodeName} episode from inventory?", "Delete Episodes", MessageBoxButton.YesNo);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        Episodes.Remove(SelectedEpisode);
+                        MessageBox.Show($"{episodeName} Episode Deleted", "Delete Episodes");
+
+                        if (Episodes.Any()) SelectedEpisode = Episodes[0];
+                        break;
+
+                    case MessageBoxResult.No:
+                        MessageBox.Show($"{episodeName} Episode Deletion Canceled", "Delete Episodes");
+                        break;
+                }
+            }
+        }
+
+        private void EditEpisode(object parameter)
+        {
+            EpisodeOperation episodeOperation = new EpisodeOperation()
+            {
+                Status = EpisodeOperation.OperationStatus.CANCEL,
+                Episode = SelectedEpisode
+            };
+            Window editEpisodeWindow = new PhilEditView(episodeOperation);
+            editEpisodeWindow.ShowDialog();
+
+            if (episodeOperation.Status != EpisodeOperation.OperationStatus.CANCEL)
+            {
+                Episodes.Remove(SelectedEpisode);
+                Episodes.Add(episodeOperation.Episode);
+                SelectedEpisode = episodeOperation.Episode;
+            }
         }
 
         private void AddEpisode(object parameter)

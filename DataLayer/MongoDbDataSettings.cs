@@ -15,7 +15,7 @@ namespace MandalorianDB.DataLayer
         private static string userName = "Admin";
         private static string password = "Aa123456";
 
-        public static string connectionString = $"mongodb+srv://{userName}:{password}@cluster0.hasci.mongodb.net/<{databaseName}>?retryWrites=true&w=majority";
+        public static string connectionString = $"mongodb+srv://{userName}:{password}@mandaloriandb.1sbfk.mongodb.net/<{databaseName}>?retryWrites=true&w=majority";
 
         public static string collectionName = "CIT255";
         public static string databaseName = "MandoEpisodes";

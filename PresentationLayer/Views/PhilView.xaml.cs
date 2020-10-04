@@ -22,11 +22,9 @@ namespace MandalorianDB.PresentationLayer
         public PhilView()
         {
             InitializeComponent();
+            DataContext = new PhilViewModel();
         }
 
-        private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+       
     }
 }

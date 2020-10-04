@@ -76,9 +76,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Window.DataContext>
-        <local:PhilAddCharViewModel/>
-    </Window.DataContext>
+    
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -87,13 +85,13 @@
         <Grid Grid.Row="0" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Character Name: " Style="{StaticResource LabelDetail}"/>
-                <TextBox Name="TBCharName" Text="" Style="{StaticResource TextBoxInput}"/>
+                <TextBox Text="{Binding NewChar}" Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSaveData}" CommandParameter="{Binding ElementName=TBCharName}" Content="Save"/>
-                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonCancelData}" Content="Cancel"/>
+                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSaveData}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Save"/>
+                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonCancelData}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Cancel"/>
             </StackPanel>
         </Grid>
     </Grid>

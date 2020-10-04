@@ -74,9 +74,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Window.DataContext>
-        <local:PhilViewModel/>
-    </Window.DataContext>
+    
     <Grid Background="Black" Margin="5">
 
         <Grid.RowDefinitions>

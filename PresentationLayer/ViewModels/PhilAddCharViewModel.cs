@@ -21,19 +21,24 @@ namespace MandalorianDB.PresentationLayer.ViewModels
     {
         public ICommand ButtonAddCommand { get; set; }
         public ICommand ButtonCancelCommand { get; set; }
-        public Episode Episode { get; set; }
-        private EpisodeOperation _episodeOperation;
-        public PhilAddCharViewModel(EpisodeOperation episodeOp)
+       
+
+
+        public string NewChar { get; set; }
+        
+        private CharacterOperation _charOperation;
+        public PhilAddCharViewModel(CharacterOperation charOp)
         {
-            Episode = episodeOp.Episode;
-            _episodeOperation = episodeOp;
-            ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
-            ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddEpisode));
+            NewChar = charOp.NewChar;
+           
+            _charOperation = charOp;
+            ButtonAddCommand = new RelayCommand(new Action<object>(AddChar));
+            ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddChar));
         }
 
-        private void CancelAddEpisode(object parameter)
+        private void CancelAddChar(object parameter)
         {
-            _episodeOperation.Status = EpisodeOperation.OperationStatus.CANCEL;
+            _charOperation.Status = CharacterOperation.OperationStatus.CANCEL;
 
             if (parameter is System.Windows.Window)
             {
@@ -41,9 +46,9 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             }
         }
 
-        private void AddEpisode(object parameter)
+        private void AddChar(object parameter)
         {
-            _episodeOperation.Status = EpisodeOperation.OperationStatus.OKAY;
+            _charOperation.Status = CharacterOperation.OperationStatus.OKAY;
 
             if (parameter is System.Windows.Window)
             {

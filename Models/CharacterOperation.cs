@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MandalorianDB.Models
 {
-    class CharacterOperation
+    public class CharacterOperation
     {
         public enum OperationStatus { OKAY, CANCEL }
         public OperationStatus Status { get; set; }
-        public List<string> EpChars { get; set; }
+        public string NewChar { get; set; }
     }
 }

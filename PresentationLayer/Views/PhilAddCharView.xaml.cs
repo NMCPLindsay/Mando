@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MandalorianDB.Models;
+using MandalorianDB.PresentationLayer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,11 @@ namespace MandalorianDB.PresentationLayer.Views
     /// </summary>
     public partial class PhilAddCharView : Window
     {
-        public PhilAddCharView()
+        public PhilAddCharView(CharacterOperation charOperation)
         {
             InitializeComponent();
+            PhilAddCharViewModel philAddCharViewModel = new PhilAddCharViewModel(charOperation);
+            DataContext = philAddCharViewModel;
         }
     }
 }
