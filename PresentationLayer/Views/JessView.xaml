@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MandalorianDB"
+        xmlns:local="clr-namespace:MandalorianDB.PresentationLayer"
         xmlns:local1="clr-namespace:MandalorianDB.PresentationLayer.ViewModels"
         mc:Ignorable="d"
         Title="The Mandalorian" 
@@ -67,6 +67,7 @@
     <Window.DataContext>
         <local1:JessViewModel/>
     </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -192,7 +193,7 @@
                 </Grid>
                 <Grid Height="350" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="250"/>
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="0*"/>
                     </Grid.ColumnDefinitions>
@@ -243,7 +244,7 @@
                         FontSize="20"
                         Content="Save"
                         Style="{StaticResource ButtonStyle}"
-                        Command="{Binding Command}"
+                        Command="{Binding SaveEpisodeCommand}"
                         CommandParameter="Save"/>
                     <Button 
                         x:Name="Button_Cancel" 
@@ -254,7 +255,7 @@
                         FontSize="20"
                         Content="Cancel"
                         Style="{StaticResource ButtonStyle}"
-                        Command="{Binding Command}"
+                        Command="{Binding CancelEpisodeCommand}"
                         CommandParameter="CANCEL"/>
                 </StackPanel>
             </StackPanel>
@@ -272,24 +273,24 @@
                      Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Episode Name:    " Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox Text="{Binding SelectedEpisode.Name}" Style="{StaticResource DetailTextBoxStyle}"/>
+                            <TextBox Text="{Binding DetailedViewEpisode.Name}" Style="{StaticResource DetailTextBoxStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Episode Number:" Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox Text="{Binding SelectedEpisode.EpisodeNumber}" Style="{StaticResource DetailTextBoxStyle}"/>
+                            <TextBox Text="{Binding DetailedViewEpisode.EpisodeNumber}" Style="{StaticResource DetailTextBoxStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Episode Writer:   " Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox Text="{Binding SelectedEpisode.Writer}" Style="{StaticResource DetailTextBoxStyle}"/>
+                            <TextBox Text="{Binding DetailedViewEpisode.Writer}" Style="{StaticResource DetailTextBoxStyle}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Episode Director:" Style="{StaticResource DetailLabelStyle}"/>
-                            <TextBox Text="{Binding SelectedEpisode.Director}" Style="{StaticResource DetailTextBoxStyle}"/>
+                            <TextBox Text="{Binding DetailedViewEpisode.Director}" Style="{StaticResource DetailTextBoxStyle}"/>
                         </StackPanel>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Characters:" Style="{StaticResource DetailLabelStyle}"/>
-                                <ListBox Margin="30,10,59,10" ItemsSource="{Binding SelectedEpisode.Characters}" 
+                                <ListBox Margin="30,10,59,10" ItemsSource="{Binding DetailedViewEpisode.Characters}" 
                                          MaxHeight="75"
                                          MinHeight="25" 
                                          Width="152"/>
@@ -298,7 +299,6 @@
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical">
-                            <Label Content="Discription:" Style="{StaticResource DetailLabelStyle}"/>
                             <TextBox
                                 HorizontalAlignment="Left"
                                 Width="252"
@@ -307,8 +307,10 @@
                                 VerticalAlignment="Top"
                                 
                                  ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                Text="{Binding SelectedEpisode.EpisodeDetails}"
-                               Style="{StaticResource DetailTextBoxStyle}" Margin="0,0,-1,0"/>
+                                Text="{Binding DetailedViewEpisode.EpisodeDetails}"
+                               Style="{StaticResource DetailTextBoxStyle}"/>
+
+                            <Label Content="Discription:" Style="{StaticResource DetailLabelStyle}"/>
 
                         </StackPanel>
                     </StackPanel>

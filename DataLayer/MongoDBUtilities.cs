@@ -55,6 +55,7 @@ namespace MandalorianDB.DataLayer
                 //
                 // write all seed data to collection
                 //
+                var test = SessionData.GetEpisodeList();
                 collection.InsertMany(SessionData.GetEpisodeList());
                 return true;
             }
