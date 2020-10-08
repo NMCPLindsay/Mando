@@ -31,10 +31,10 @@ namespace MandalorianDB.PresentationLayer
                 OnPropertyChanged(nameof(SelectedChar)); }
         }
 
-        public PhilAddViewModel(EpisodeOperation episodeOp)
+        public PhilAddViewModel(EpisodeOperation episodeOperation)
         {
-            NewEpisode = episodeOp.Episode;
-            _episodeOperation = episodeOp;
+            NewEpisode = episodeOperation.Episode;
+            _episodeOperation = episodeOperation;
             ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
             ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddEpisode));
         }

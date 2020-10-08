@@ -112,7 +112,7 @@ namespace MandalorianDB.DataLayer
 
         IEnumerable<Episode> IDataService.GetAll()
         {
-            throw new NotImplementedException();
+            return _episodes;
         }
 
         Episode IDataService.GetById(int id)

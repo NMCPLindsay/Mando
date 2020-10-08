@@ -70,8 +70,9 @@ namespace MandalorianDB.Models
 
         }
 
-        public Episode(int epNum, string name, int seaNum, List<string> chars, string epDets, string director, string writer) 
+        public Episode(int id, int epNum, string name, int seaNum, List<string> chars, string epDets, string director, string writer) 
         {
+            Id = id;
             EpisodeNumber=epNum;
             Name=name;
             SeasonNumber=seaNum;
