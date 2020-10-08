@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MandalorianDB.PresentationLayer"
-        xmlns:local1="clr-namespace:MandalorianDB.PresentationLayer.ViewModels"
+        xmlns:local1="clr-namespace:MandalorianDB.PresentationLayer.ViewModels" xmlns:local11="http://schemas.microsoft.com/netfx/2007/xaml/presentation"
         mc:Ignorable="d"
         Title="The Mandalorian" 
         Height="678" Width="896"
@@ -61,7 +61,9 @@
                     <Setter Property="Background" Value="White"/>
                 </Trigger>
             </Style.Triggers>
-        </Style>
+            </Style>
+            <local11:BooleanToVisibilityConverter x:Key="myBoolToVisibilityConverter" />
+        
     </Window.Resources>
 
     <Window.DataContext>
@@ -77,12 +79,10 @@
                 Orientation="Horizontal"
                 HorizontalAlignment="Center"
                 Grid.Row="0">
-
             <Label
                 Style="{StaticResource HeaderStyle}"
                 HorizontalAlignment="Center"
                 Content="The Mandalorian Series"/>
-
             <Button
                   x:Name="Button_Quit"
                   Width="70"
@@ -212,7 +212,6 @@
                                     Orientation="Vertical">
                                     <StackPanel
                                         Orientation="Horizontal">
-                                        
                                         <Label
                                             Content="{Binding EpisodeNumber}"
                                             Width="30"                                
@@ -221,14 +220,12 @@
                                              Content="{Binding Name}"
                                              Padding="0,6"
                                             Style="{StaticResource MasterLabelTextStyle}"/>
-
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-
                 <StackPanel Grid.Column="1"
                     Orientation="Vertical"/>
                 <StackPanel
@@ -244,6 +241,7 @@
                         FontSize="20"
                         Content="Save"
                         Style="{StaticResource ButtonStyle}"
+                         Visibility="{Binding IsEditingAdding, Converter={StaticResource myBoolToVisibilityConverter}}"
                         Command="{Binding SaveEpisodeCommand}"
                         CommandParameter="Save"/>
                     <Button 
@@ -255,6 +253,7 @@
                         FontSize="20"
                         Content="Cancel"
                         Style="{StaticResource ButtonStyle}"
+                         Visibility="{Binding IsEditingAdding, Converter={StaticResource myBoolToVisibilityConverter}}"
                         Command="{Binding CancelEpisodeCommand}"
                         CommandParameter="CANCEL"/>
                 </StackPanel>
@@ -287,31 +286,48 @@
                             <Label Content="Episode Director:" Style="{StaticResource DetailLabelStyle}"/>
                             <TextBox Text="{Binding DetailedViewEpisode.Director}" Style="{StaticResource DetailTextBoxStyle}"/>
                         </StackPanel>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Characters:" Style="{StaticResource DetailLabelStyle}"/>
-                                <ListBox Margin="30,10,59,10" ItemsSource="{Binding DetailedViewEpisode.Characters}" 
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Add Character:" Style="{StaticResource MasterLabelTextStyle}" Visibility="{Binding IsEditingAdding, Converter={StaticResource myBoolToVisibilityConverter}}"/>
+                            <TextBox x:Name="TBNewChar" Text="{Binding NewChar}" Style="{StaticResource DetailTextBoxStyle}" Visibility="{Binding IsEditingAdding, Converter={StaticResource myBoolToVisibilityConverter}}"/>
+                            <Button
+                                x:Name="Button_AddChar"
+                                Width="15"
+                                Height="20"
+                                VerticalAlignment="Center"
+                                Content="+"
+                                Style="{StaticResource ButtonStyle}"
+                                 Visibility="{Binding IsEditingAdding, Converter={StaticResource myBoolToVisibilityConverter}}"
+                                Command="{Binding Path=AddCharCommand}"
+                                CommandParameter="{Binding ElementName=TBNewChar}"/>
+                            <Button
+                                x:Name="Button_DelChar"
+                                Width="15"
+                                Height="20"
+                                VerticalAlignment="Center"
+                                Content="-"
+                                Style="{StaticResource ButtonStyle}"
+                                 Visibility="{Binding IsEditingAdding, Converter={StaticResource myBoolToVisibilityConverter}}"
+                                Command="{Binding Path=DeleteCharCommand}"
+                                CommandParameter="{Binding SelectedChar}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Characters:" Style="{StaticResource DetailLabelStyle}"/>
+                            <ListBox Margin="30,10,59,10" ItemsSource="{Binding DetailedViewEpisode.Characters}" SelectedItem="{Binding SelectedChar}" 
                                          MaxHeight="75"
                                          MinHeight="25" 
                                          Width="152"/>
-
-                            </StackPanel>
                         </StackPanel>
-
                         <StackPanel Orientation="Vertical">
+                            <Label Content="Discription:" Style="{StaticResource DetailLabelStyle}"/>
                             <TextBox
                                 HorizontalAlignment="Left"
                                 Width="252"
                                 Height="200"
                                 TextWrapping="Wrap"
                                 VerticalAlignment="Top"
-                                
-                                 ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                ScrollViewer.VerticalScrollBarVisibility="Visible"
                                 Text="{Binding DetailedViewEpisode.EpisodeDetails}"
-                               Style="{StaticResource DetailTextBoxStyle}"/>
-
-                            <Label Content="Discription:" Style="{StaticResource DetailLabelStyle}"/>
-
+                                Style="{StaticResource DetailTextBoxStyle}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -355,7 +371,4 @@
             </StackPanel>
         </Grid>
     </Grid>
-    
-
-
 </Window>
