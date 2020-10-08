@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MandalorianDB.Models;
-
+using MandalorianDB.BusinessLayer;
+using System.Collections.ObjectModel;
 
 namespace MandalorianDB.DataLayer 
 {
-	public class SessionData
+	public class SessionData : ObservableObject
 	{
 		public static List<Episode> GetEpisodeList()
 		{

@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MandalorianDB.BusinessLayer;
 using MandalorianDB.DataLayer;
 
 namespace MandalorianDB.Models
 
 {
-    public class Episode
+    public class Episode : ObservableObject
     {
         private int _episodeNumber;
         private string _name;

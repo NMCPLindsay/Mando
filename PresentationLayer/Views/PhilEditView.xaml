@@ -97,7 +97,8 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
@@ -111,7 +112,7 @@
         <Grid Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Episode: " Foreground="CadetBlue"/>
-                <TextBox Text="{Binding UserEpisode}"  Style="{StaticResource TextBoxInput}"/>
+                <TextBox Text="{Binding UserEpisode.Name}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">
@@ -136,17 +137,23 @@
             <StackPanel Orientation="Horizontal">
                 <Label Content="Characters: " Foreground="CadetBlue"/>
                 <ListBox SelectedItem="{Binding SelectedChar}"  ItemsSource="{Binding UserEpisode.Characters}" Style="{StaticResource CharListBox}"/>
-                <Button Style="{StaticResource ButtonStyleTiny}" Content="+" Command="{Binding ButtonAddCharCommand}" CommandParameter="{Binding UserEpisode.Characters}"/>
+                <Button Style="{StaticResource ButtonStyleTiny}" Content="+" Command="{Binding ButtonAddCharCommand}" CommandParameter="{Binding ElementName=TBNewChar}"/>
                 <Button Style="{StaticResource ButtonStyleTiny}" Content="-" Command="{Binding ButtonDelCharCommand}" CommandParameter="{Binding SelectedChar}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="6" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
+                <Label Content="CharAdd: " Foreground="CadetBlue"/>
+                <TextBox x:Name="TBNewChar" Text="{Binding NewChar}"  Style="{StaticResource TextBoxInput}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="7" Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
                 <Label Content="Details" Foreground="CadetBlue"/>
                 <TextBox Text="{Binding UserEpisode.EpisodeDetails}" Style="{StaticResource TextBoxDetails}"/>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="7" Grid.Column="0">
+        <Grid Grid.Row="8" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSaveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Save"/>
                 <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonCancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Cancel"/>

@@ -50,6 +50,7 @@ namespace MandalorianDB.PresentationLayer
                 OnPropertyChanged(nameof(Episodes));
             }
         }
+    
 
 
 
@@ -80,8 +81,8 @@ namespace MandalorianDB.PresentationLayer
         }
         public PhilViewModel()
         {
-            //_episodeBusiness = new EpisodeBusiness();
-            //Episodes = new ObservableCollection<Episode>(_episodeBusiness.AllEpisodes());
+            _episodeBusiness = new EpisodeBusiness();
+            Episodes = new ObservableCollection<Episode>(_episodeBusiness.AllEpisodes());
             Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
             if (Episodes.Any()) SelectedEpisode = Episodes[0];
 

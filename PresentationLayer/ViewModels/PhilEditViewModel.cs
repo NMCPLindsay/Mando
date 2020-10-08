@@ -20,10 +20,19 @@ namespace MandalorianDB.PresentationLayer
         public ICommand ButtonCancelCommand { get; set; }
         public ICommand ButtonAddCharCommand { get; set; }
         public ICommand ButtonDelCharCommand { get; set; }
-
+        public string NewChar { get; set; }
         public Episode UserEpisode { get; set; }
         private EpisodeOperation _episodeOperation;
         private string _selectedChar;
+        private List<string> _chars;
+
+        public List<string> Chars
+        {
+            get { return _chars; }
+            set { _chars = value;
+                OnPropertyChanged(nameof(Chars));
+            }
+        }
 
         public string SelectedChar
         {
@@ -34,14 +43,26 @@ namespace MandalorianDB.PresentationLayer
                 OnPropertyChanged(nameof(SelectedChar));
             }
         }
+        public PhilEditViewModel(Episode episode)
+        {
+            UserEpisode = episode;
+            Chars = new List<string>();
+            UserEpisode.Characters = Chars;
+            
+
+
+
+            ButtonSaveCommand = new RelayCommand(new Action<object>(EditEpisode));
+            ButtonCancelCommand = new RelayCommand(new Action<object>(CancelEditEpisode));
+            ButtonAddCharCommand = new RelayCommand(new Action<object>(AddChar));
+            ButtonDelCharCommand = new RelayCommand(new Action<object>(DelChar));
+        }
         public PhilEditViewModel(EpisodeOperation episodeOperation)
         {
             UserEpisode = episodeOperation.Episode;
             _episodeOperation = episodeOperation;
-            if (UserEpisode.Characters.Any())
-            {
-                SelectedChar = UserEpisode.Characters[0];
-            }
+            
+            
             ButtonSaveCommand = new RelayCommand(new Action<object>(EditEpisode));
             ButtonCancelCommand = new RelayCommand(new Action<object>(CancelEditEpisode));
             ButtonAddCharCommand = new RelayCommand(new Action<object>(AddChar));
@@ -60,7 +81,7 @@ namespace MandalorianDB.PresentationLayer
                 {
                     case MessageBoxResult.Yes:
                         UserEpisode.Characters.Remove(parameter.ToString());
-                        MessageBox.Show($"{parameter} Episode Deleted", "Delete Episodes");
+                        MessageBox.Show($"{parameter} character Deleted", "Delete Character");
 
                         if (UserEpisode.Characters.Any())
                         {
@@ -77,18 +98,14 @@ namespace MandalorianDB.PresentationLayer
 
         private void AddChar(object parameter)
         {
-            CharacterOperation charOperation = new CharacterOperation()
+            NewChar = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
+            if (NewChar != null)
             {
-                Status = CharacterOperation.OperationStatus.CANCEL,
-                
-
-            };
-            Window addCharWindow = new PhilAddCharView(charOperation);
-            addCharWindow.ShowDialog();
-
-            if (charOperation.Status != CharacterOperation.OperationStatus.CANCEL)
+                UserEpisode.Characters.Add(NewChar);
+            }
+            else
             {
-                UserEpisode.Characters.Add(charOperation.NewChar);
+                MessageBox.Show("Please input a character to add.");
             }
         }
 

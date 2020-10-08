@@ -181,7 +181,7 @@
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Add" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonAddCommand}" CommandParameter="{Binding Episodes}"/>
+                <Button Content="Add" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonAddCommand}"/>
                 <Button Content="Edit" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonEditCommand}" CommandParameter="{Binding SelectedEpisode}" />
                 <Button Content="Delete" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonDeleteCommand}" CommandParameter="{Binding SelectedEpisode}"/>
                 <Button Content="Quit" Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonQuitCommmand}"/>

@@ -144,10 +144,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PresentationLayer\Views\PhilAddCharView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="PresentationLayer\Views\PhilEditView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -171,7 +167,6 @@
     <Compile Include="Models\FileIoMessage.cs" />
     <Compile Include="PresentationLayer\ViewModels\JessViewModel.cs" />
     <Compile Include="PresentationLayer\ViewModels\MichelleManageViewModel.cs" />
-    <Compile Include="PresentationLayer\ViewModels\PhilAddCharViewModel.cs" />
     <Compile Include="PresentationLayer\Views\JessView.xaml.cs">
       <DependentUpon>JessView.xaml</DependentUpon>
     </Compile>
@@ -182,9 +177,6 @@
       <DependentUpon>MichelleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="PresentationLayer\ViewModels\MichelleViewModel.cs" />
-    <Compile Include="PresentationLayer\Views\PhilAddCharView.xaml.cs">
-      <DependentUpon>PhilAddCharView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PresentationLayer\Views\PhilEditView.xaml.cs">
       <DependentUpon>PhilEditView.xaml</DependentUpon>
     </Compile>

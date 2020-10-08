@@ -26,5 +26,6 @@ namespace MandalorianDB.PresentationLayer
             PhilEditViewModel philEditViewModel = new PhilEditViewModel(episodeOperation);
             DataContext = philEditViewModel;
         }
+
     }
 }
