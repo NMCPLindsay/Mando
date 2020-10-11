@@ -8,6 +8,7 @@ using MandalorianDB.DataLayer;
 using System.Collections.Generic;
 using MandalorianDB.PresentationLayer.Views;
 using MandalorianDB.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MandalorianDB.PresentationLayer.ViewModels
 {
@@ -22,7 +23,10 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             ADD,
             EDIT,
             DELETE
+           
         }
+
+      
         #endregion
 
         #region Commands
@@ -46,19 +50,28 @@ namespace MandalorianDB.PresentationLayer.ViewModels
 
         public ICommand CancelEpisodeCommand { get; set; }
 
+        public ICommand AddCharCommand { get; set; }
+
+        public ICommand DeleteCharCommand { get; set; }
+
+        public ICommand SaveCharCommand { get; set; }
+
         #endregion
 
         #region Field
+        
         private OperationStatus _operationStatus = OperationStatus.NONE;
+       
         private ObservableCollection<Episode> _episodes;
         private Episode _selectedEpisode;
         private EpisodeBusiness _episodeBusiness;
         private Episode _detailedViewEpisode;
+        private string _addNewChar;
         private string _sortType;
         private string _searchText;
         private string _minEpisodeText;
         private string _maxEpisodeText;
-        
+        private string _selectedChar;        
 
         private bool _isEditingAdding = false;
         private bool _showAddEditDeleteButtons = true;
@@ -74,7 +87,14 @@ namespace MandalorianDB.PresentationLayer.ViewModels
                 OnPropertyChanged(nameof(SearchText));
             }
         }
-
+        public string NewChar 
+        { get { return _addNewChar; }
+            set 
+            {
+                _addNewChar = value;
+                OnPropertyChanged(nameof(NewChar));
+            }
+        }
         public string MaxEpisodeText
         {
             get { return _maxEpisodeText; }
@@ -116,7 +136,6 @@ namespace MandalorianDB.PresentationLayer.ViewModels
                     OnPropertyChanged(nameof(SelectedEpisode));
                     UpdateDetailedViewEpisodeToSelected();
                 }
-               
             }
         }
 
@@ -156,6 +175,16 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             get { return _sortType; }
             set { _sortType = value; }
         }
+
+        public string SelectedChar
+        {
+            get { return _selectedChar; }
+            set
+            {
+                _selectedChar = value;
+                OnPropertyChanged(nameof(SelectedChar));
+            }
+        }
         #endregion
 
         #region Constructor
@@ -184,12 +213,15 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             ResetEpisodeListCommand = new RelayCommand(new Action<object>(OnResetList));
             SaveEpisodeCommand = new RelayCommand(new Action<object>(OnSaveEpisode));
             CancelEpisodeCommand = new RelayCommand(new Action<object>(OnCancelEpisode));
+            AddCharCommand = new RelayCommand(new Action<object>(OnAddChar));
+            DeleteCharCommand = new RelayCommand(new Action<object>(OnDeleteChar));
+          
         }
 
         #endregion
 
         #region Method 
-        private void OnResetList(Object parameter)
+        private void OnResetList(object parameter)
         {
             // reseting filters
             SearchText = "";
@@ -211,7 +243,6 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             Episodes = new ObservableCollection<Episode>(_episodes.Where(x => x.Writer.ToLower().Contains(_searchText)));
 
         }
-
         private void OnEpisodeFilterEpisodeList(object parameter)
         {
             //reset search
@@ -247,6 +278,33 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             }
 
         }
+        private void OnDeleteChar(object parameter)
+        {
+            if(_selectedChar != null)
+            {
+               MessageBoxResult result = System.Windows.MessageBox.Show($"Are you sure you want to delete {parameter}?", "Delete Character", System.Windows.MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                   DetailedViewEpisode.Characters.Remove(parameter.ToString());
+                    if (DetailedViewEpisode.Characters.Any())
+                    {
+                        SelectedChar = DetailedViewEpisode.Characters[0];
+                    }
+                }
+                else
+                {
+                    result = MessageBoxResult.Cancel;
+                    _operationStatus = OperationStatus.NONE;
+                }
+            }
+        }
+        private void OnAddChar(object parameter)
+        {
+            IsEditingAdding = true;
+            ShowAddEditDeleteButtons = false;
+            DetailedViewEpisode.Characters.Add(NewChar);
+        }
+       
         private void OnAddEpisode(object parameter)
         {
             ResetDetailedViewEpisode();
@@ -258,13 +316,23 @@ namespace MandalorianDB.PresentationLayer.ViewModels
         {
             if (_selectedEpisode != null)
             {
-                _operationStatus = OperationStatus.EDIT;
-                IsEditingAdding = true;
-                ShowAddEditDeleteButtons = false;
-            }
-        }
-       
+                 MessageBoxResult result = System.Windows.MessageBox.Show($"Are you sure you want to edit {_selectedEpisode.Name}?", "Edit epsiode", System.Windows.MessageBoxButton.OKCancel);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                     _operationStatus = OperationStatus.EDIT;
+                     IsEditingAdding = true;
+                     ShowAddEditDeleteButtons = false;
+                        break;
 
+                    case MessageBoxResult.Cancel:
+                    _operationStatus = OperationStatus.NONE;
+                        break;
+                    default:
+                        break;
+                }
+            }
+         }
         private void OnDeleteEpisode(object parameter)
         {
            if(_selectedEpisode != null)
@@ -285,6 +353,11 @@ namespace MandalorianDB.PresentationLayer.ViewModels
                     //set selected episode to first on list
                     //
                     SelectedEpisode = _episodes[0];
+                }
+                else
+                {
+                    result = MessageBoxResult.Cancel;
+                    _operationStatus = OperationStatus.NONE;
                 }
             }
         }
@@ -358,10 +431,10 @@ namespace MandalorianDB.PresentationLayer.ViewModels
             tempEpisode.Writer = _selectedEpisode.Writer;
             DetailedViewEpisode = tempEpisode;
         }
-       
         private void ResetDetailedViewEpisode()
         {
             DetailedViewEpisode = new Episode();
+            DetailedViewEpisode.Characters = new List<string>();
         }
         private void OnCancelEpisode(object parameter)
         {
