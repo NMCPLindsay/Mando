@@ -80,7 +80,8 @@ namespace MandalorianDB.PresentationLayer
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        UserEpisode.Characters.Remove(parameter.ToString());
+                        Chars.Remove(parameter.ToString());
+                        UserEpisode.Characters = Chars;
                         MessageBox.Show($"{parameter} character Deleted", "Delete Character");
 
                         if (UserEpisode.Characters.Any())
@@ -101,7 +102,10 @@ namespace MandalorianDB.PresentationLayer
             NewChar = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
             if (NewChar != null)
             {
-                UserEpisode.Characters.Add(NewChar);
+                Chars = UserEpisode.Characters.ToList();
+                Chars.Add(NewChar);
+                
+                UserEpisode.Characters = Chars;
             }
             else
             {
@@ -114,6 +118,8 @@ namespace MandalorianDB.PresentationLayer
             //
             // TODO - validate user inputs
             //
+            EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+            episodeBusiness.UpdateEpisode(UserEpisode);
             _episodeOperation.Status = EpisodeOperation.OperationStatus.OKAY;
 
             if (parameter is System.Windows.Window)

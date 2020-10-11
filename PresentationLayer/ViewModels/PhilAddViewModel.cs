@@ -20,11 +20,21 @@ namespace MandalorianDB.PresentationLayer
         public ICommand ButtonDelCharCommand { get; set; }
         public ICommand ButtonAddCommand { get; set; }
         public ICommand ButtonCancelCommand { get; set; }
-        public Episode UserEpisode { get; set; }
+        public Episode NewEpisode { get; set; }
         private EpisodeOperation _episodeOperation;
         private string _selectedChar;
         public string NewChar { get; set; }
+        private List<string> _chars;
 
+        public List<string> Chars
+        {
+            get { return _chars; }
+            set
+            {
+                _chars = value;
+                OnPropertyChanged(nameof(Chars));
+            }
+        }
 
         public string SelectedChar
         {
@@ -35,9 +45,9 @@ namespace MandalorianDB.PresentationLayer
 
         public PhilAddViewModel(EpisodeOperation episodeOp)
         {
-            UserEpisode = episodeOp.Episode;
+            NewEpisode = episodeOp.Episode;
             _episodeOperation = episodeOp;
-            UserEpisode.Characters = new List<string>();
+            Chars = new List<string>();
             
             ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
             ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddEpisode));
@@ -47,9 +57,12 @@ namespace MandalorianDB.PresentationLayer
         private void AddChar(object parameter)
         {
             NewChar = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
-            if (NewChar != null)
+            if (NewChar != "")
             {
-                UserEpisode.Characters.Add(NewChar);
+                
+                Chars.Add(NewChar);
+                NewEpisode.Characters = Chars;
+                
             }
             else
             {
@@ -67,12 +80,12 @@ namespace MandalorianDB.PresentationLayer
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        UserEpisode.Characters.Remove(parameter.ToString());
+                        NewEpisode.Characters.Remove(parameter.ToString());
                         MessageBox.Show($"{parameter} character Deleted", "Delete Character");
 
-                        if (UserEpisode.Characters.Any())
+                        if (NewEpisode.Characters.Any())
                         {
-                            SelectedChar = UserEpisode.Characters[0];
+                            SelectedChar = NewEpisode.Characters[0];
                         }
                         break;
 
@@ -96,6 +109,11 @@ namespace MandalorianDB.PresentationLayer
         private void AddEpisode(object parameter)
         {
             _episodeOperation.Status = EpisodeOperation.OperationStatus.OKAY;
+            EpisodeRepository episodeRepository = new EpisodeRepository();
+            List<Episode> episodes = new List<Episode>(episodeRepository.GetAll());
+            NewEpisode.Id = (episodes.Count() + 1);
+            EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+            episodeBusiness.AddEpisode(NewEpisode);
 
             if (parameter is System.Windows.Window)
             {

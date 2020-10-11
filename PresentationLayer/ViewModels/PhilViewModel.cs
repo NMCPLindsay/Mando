@@ -152,6 +152,7 @@ namespace MandalorianDB.PresentationLayer
             if (episodeOperation.Status != EpisodeOperation.OperationStatus.CANCEL)
             {
                 Episodes.Add(episodeOperation.Episode);
+                SelectedEpisode = episodeOperation.Episode;
             }
 
         }

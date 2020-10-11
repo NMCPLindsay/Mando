@@ -105,38 +105,38 @@
         <Grid Grid.Row="0" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Episode #: " Foreground="CadetBlue"/>
-                <TextBox Name="TBEpNum" Text="{Binding UserEpisode.EpisodeNumber}"  Style="{StaticResource TextBoxInput}"/>
+                <TextBox Name="TBEpNum" Text="{Binding NewEpisode.EpisodeNumber}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Episode: " Foreground="CadetBlue"/>
-                <TextBox Text="{Binding UserEpisode.Name}"  Style="{StaticResource TextBoxInput}"/>
+                <TextBox Text="{Binding NewEpisode.Name}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Season: " Foreground="CadetBlue"/>
-                <TextBox  Text="{Binding UserEpisode.SeasonNumber}"  Style="{StaticResource TextBoxInput}"/>
+                <TextBox  Text="{Binding NewEpisode.SeasonNumber}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Writer: " Foreground="CadetBlue"/>
-                <TextBox Text="{Binding UserEpisode.Writer}" Style="{StaticResource TextBoxInput}" />
+                <TextBox Text="{Binding NewEpisode.Writer}" Style="{StaticResource TextBoxInput}" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="4" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Director: " Foreground="CadetBlue"/>
-                <TextBox Text="{Binding UserEpisode.Director}"  Style="{StaticResource TextBoxInput}"/>
+                <TextBox Text="{Binding NewEpisode.Director}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="5" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Characters: " Foreground="CadetBlue"/>
-                <ListBox SelectedItem="{Binding SelectedChar}"  ItemsSource="{Binding UserEpisode.Characters}" Style="{StaticResource CharListBox}"/>
+                <ListBox SelectedItem="{Binding SelectedChar}"  ItemsSource="{Binding Chars}" Style="{StaticResource CharListBox}"/>
                 <Button Style="{StaticResource ButtonStyleTiny}" Content="+" Command="{Binding ButtonAddCharCommand}" CommandParameter="{Binding ElementName=TBNewChar}"/>
                 <Button Style="{StaticResource ButtonStyleTiny}" Content="-" Command="{Binding ButtonDelCharCommand}" CommandParameter="{Binding SelectedChar}"/>
             </StackPanel>
@@ -144,18 +144,18 @@
         <Grid Grid.Row="6" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="CharAdd: " Foreground="CadetBlue"/>
-                <TextBox x:Name="TBNewChar" Text="{Binding NewChar}"  Style="{StaticResource TextBoxInput}"/>
+                <TextBox Name="TBNewChar" Text="{Binding NewChar}"  Style="{StaticResource TextBoxInput}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="7" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Details" Foreground="CadetBlue"/>
-                <TextBox Text="{Binding UserEpisode.EpisodeDetails}" Style="{StaticResource TextBoxDetails}"/>
+                <TextBox Text="{Binding NewEpisode.EpisodeDetails}" Style="{StaticResource TextBoxDetails}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="8" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonSaveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Save"/>
+                <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonAddCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Save"/>
                 <Button Style="{StaticResource ButtonStyleSmall}" Command="{Binding ButtonCancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Content="Cancel"/>
             </StackPanel>
         </Grid>
