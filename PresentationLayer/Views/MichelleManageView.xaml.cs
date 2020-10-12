@@ -1,6 +1,7 @@
 ﻿namespace MandalorianDB.PresentationLayer.Views
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows;
     using System.Windows.Data;
@@ -37,9 +38,10 @@
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             var model = this.DataContext as MichelleManageViewModel;
-            var characters = this.CharactersListBox.Items.Cast<string>().ToList();
+            var characters =  this.CharactersListBox.Items.Cast<string>().ToList();
 
-            model.Episode.Characters = characters;
+            //model.Episode.Characters =  characters;
+            //this.Close();
         }
     }
 }

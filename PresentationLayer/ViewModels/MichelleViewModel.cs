@@ -191,8 +191,6 @@
 
                     break;
                 case "Characters":
-                    // NB: It is very odd to order by a list in this way.
-                    // Because you can't order a by a list, convert each list of chars to a csv.
                     this.Episodes = new ObservableCollection<Episode>(this.Episodes.OrderBy(e => string.Join(",", e.Characters)));
 
                     break;

@@ -106,10 +106,10 @@
                     <Button x:Name="DeleteCharacterButton" Style="{StaticResource ButtonStyleTiny}" Content="-" HorizontalAlignment="Right" 
                             Command="{Binding CommandRemoveCharacter}" 
                             CommandParameter="{Binding ElementName=CharactersListBox}" />
-                    <TextBox x:Name="AddCharacterTextBox" Width="100" Visibility="Hidden" Margin="5 0 0 0" Foreground="DarkGoldenrod" MaxHeight="20" />
+                    <TextBox x:Name="AddCharacterTextBox"   Text="{Binding Path=SelectedItem.Content, ElementName =CharactersListBox, Mode=OneWay}" Width="100" Visibility="Hidden" Margin="5 0 0 0" Foreground="DarkGoldenrod" MaxHeight="20" />
                 </StackPanel>
                 <ListBox x:Name="CharactersListBox" Height="75" Width="260"
-                         ItemsSource="{Binding Episode.Characters}" >
+                         ItemsSource="{Binding Path=Episode.Characters}" >
                 </ListBox>
             </StackPanel>
         </Grid>

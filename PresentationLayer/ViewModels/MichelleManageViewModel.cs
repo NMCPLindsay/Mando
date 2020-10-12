@@ -1,5 +1,6 @@
 ﻿namespace MandalorianDB.PresentationLayer.ViewModels
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows;
     using System.Windows.Controls;
@@ -13,6 +14,7 @@
     {
         private Episode _episode;
         private MichelleView _parentWindow;
+       // public string Value { get; set; }
 
 
         #region CONSTRUCTORS
@@ -26,7 +28,7 @@
 
         public MichelleManageViewModel()
         {
-            if (this.Episode == null) this.Episode = new Episode();
+            // if (this.Episode == null) this.Episode = new Episode();
 
             this.CommandAddCharacter = new RelayCommand(this.AddCharacter);
             this.CommandSaveData = new RelayCommand(this.SaveEpisode);
@@ -62,6 +64,12 @@
             }
             else
             {
+                EpisodeBusiness _episodeBusiness = new EpisodeBusiness();
+                _episodeBusiness.UpdateEpisode(this.Episode);
+                MessageBox.Show("Data saved successfully.");
+                //var win = Application.Current.Windows[0];
+                //win.Close();
+                
             }
         }
 
@@ -71,14 +79,15 @@
 
             if (textbox.Text != string.Empty)
             {
+               // this.Episode.Characters = new ObservableCollection<string>();
                 this.Episode.Characters.Add(textbox.Text);
                 textbox.Text = string.Empty;
-
+                MessageBox.Show("Characters added successfully.");
                 // TODO UpdateSource
             }
             else
             {
-                MessageBox.Show("All fields are required.");
+                // MessageBox.Show("All fields are required.");
             }
         }
 
