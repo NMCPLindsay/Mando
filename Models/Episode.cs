@@ -4,17 +4,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MandalorianDB.BusinessLayer;
 using MandalorianDB.DataLayer;
 
 namespace MandalorianDB.Models
 
 {
-    public class Episode
+    public class Episode : ObservableObject
     {
         private int _episodeNumber;
         private string _name;
         private int _seasonNumber;
-        private ObservableCollection<string> _characters;
+        private List<string> _characters;
         private string _episodeDetails;
         private string _director;
         private string _writer;
@@ -40,7 +41,7 @@ namespace MandalorianDB.Models
         }
 
 
-        public ObservableCollection<string> Characters
+        public List<string> Characters
         {
             get { return _characters; }
             set { _characters = value; }
@@ -71,9 +72,9 @@ namespace MandalorianDB.Models
 
         }
 
-        public Episode(int epNum, string name, int seaNum, ObservableCollection<string> chars, string epDets, string director, string writer) 
+        public Episode(int id, int epNum, string name, int seaNum, List<string> chars, string epDets, string director, string writer) 
         {
-            Id = epNum;
+            Id = id;
             EpisodeNumber=epNum;
             Name=name;
             SeasonNumber=seaNum;
