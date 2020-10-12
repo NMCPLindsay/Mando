@@ -20,8 +20,10 @@
         #region CONSTRUCTOR
         public MichelleViewModel()
         {
-            this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-                            
+            // this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+            this.Episodes = new ObservableCollection<Episode>(episodeBusiness.AllEpisodes());
+
             this.ButtonAddCommand = new RelayCommand(this.AddEpisode);
             this.ButtonEditCommand = new RelayCommand(this.EditEpisode);
             this.ButtonDeleteCommand = new RelayCommand(this.DeleteEpisode);
@@ -91,9 +93,20 @@
         {
             var mmvm = new MichelleManageViewModel(new Episode());
             var win = new MichelleManageView { DataContext = mmvm };
-
+            win.Closed += (s, eventarg) =>
+            {
+                EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+                this.Episodes = new ObservableCollection<Episode>(episodeBusiness.AllEpisodes());
+            };
+            // win.DataChanged += AddWindow_DataChanged;
             win.Show();
         }
+
+        //private void AddWindow_DataChanged(object sender, EventArgs e)
+        //{
+        //    EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+        //    this.Episodes = new ObservableCollection<Episode>(episodeBusiness.AllEpisodes());
+        //}
 
         private void EditEpisode(object parameter)
         {
@@ -124,6 +137,9 @@
             {
                 if (MessageBox.Show("Are you sure that you want to delete this episode?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
+                    EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+                    var episode = parameter as Episode;
+                    episodeBusiness.DeleteEpisode(episode.Id);
                     this.Episodes.Remove(parameter as Episode);
                 }
             }
@@ -131,9 +147,11 @@
 
         private void Search(object parameter)
         {
-            this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            // this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+            this.Episodes = new ObservableCollection<Episode>(episodeBusiness.AllEpisodes());
             this.SearchName = (parameter as TextBox).Text;
-            
+
             if (!(this.CriteriaFilter is null))
             {
                 switch (this.CriteriaFilter.ToUpper())
@@ -142,7 +160,7 @@
                         for (var i = this.Episodes.Count - 1; i >= 0; i--)
                         {
                             var episode = this.Episodes[i];
-                            
+
                             if (!string.Equals(episode.Director.Trim().ToUpper(), this.SearchName.Trim().ToUpper(), StringComparison.CurrentCultureIgnoreCase))
                             {
                                 this.Episodes.RemoveAt(i);
