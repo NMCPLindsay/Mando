@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -15,6 +16,20 @@
     {
         private Episode _episode;
         private MichelleView _parentWindow;
+        private EpisodeOperation _episodeOperation;
+        public string NewChar { get; set; }
+        private ObservableCollection<string> _chars;
+
+
+        public ObservableCollection<string> Chars
+        {
+            get { return _chars; }
+            set
+            {
+                _chars = value;
+                OnPropertyChanged(nameof(Chars));
+            }
+        }
 
 
 
@@ -25,6 +40,8 @@
         public MichelleManageViewModel(Episode episode)
         {
             this.Episode = episode;
+            this.Episode.Characters = new List<string>();
+            this.Chars = new ObservableCollection<string>();
             this.CommandAddCharacter = new RelayCommand(this.AddCharacter);
             this.CommandSaveData = new RelayCommand(this.SaveEpisode);
             this.CommandRemoveCharacter = new RelayCommand(this.RemoveCharacter);
@@ -75,29 +92,36 @@
                     _episodeBusiness.UpdateEpisode(this.Episode);
 
                 MessageBox.Show("Data saved successfully.");
-                
 
-                //var win = Application.Current.Windows[0];
-                //win.Close();
+
+                var win = Application.Current.Windows[0];
+                win.Close();
 
             }
         }
 
         private void AddCharacter(object parameter)
+
         {
             var textbox = parameter as TextBox;
+            EpisodeOperation episodeOp = _episodeOperation;
 
             if (textbox.Text != string.Empty)
             {
 
-                this.Episode.Characters.Add(textbox.Text);
-                textbox.Text = string.Empty;
+                NewChar = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
+                if (NewChar != "")
+                {
+
+                    Chars.Add(NewChar);
+                    OnPropertyChanged(nameof(Chars));
+                    this.Episode.Characters = Chars.ToList();
+                }
                 MessageBox.Show("Characters added successfully.");
-                // TODO UpdateSource
             }
             else
             {
-                // MessageBox.Show("All fields are required.");
+                MessageBox.Show("All fields are required.");
             }
         }
 

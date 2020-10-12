@@ -109,7 +109,7 @@
                     <TextBox x:Name="AddCharacterTextBox" Width="100" Visibility="Hidden" Margin="5 0 0 0" Foreground="DarkGoldenrod" MaxHeight="20" />
                 </StackPanel>
                 <ListBox x:Name="CharactersListBox" Height="75" Width="260"
-                         ItemsSource="{Binding Episode.Characters}" >
+                         ItemsSource="{Binding Chars}" >
                 </ListBox>
             </StackPanel>
         </Grid>

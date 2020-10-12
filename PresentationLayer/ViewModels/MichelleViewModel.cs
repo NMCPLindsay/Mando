@@ -18,6 +18,7 @@
     public class MichelleViewModel : ObservableObject
     {
         #region CONSTRUCTOR
+        private EpisodeOperation _episodeOperation;
         public MichelleViewModel()
         {
             // this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
@@ -32,6 +33,7 @@
             this.RadioCommandSortDesc = new RelayCommand(this.SortDesc);
             this.RadioCommandSearchCrit = new RelayCommand(this.SetSearchCriteria);
             this.ButtonSearchCommand = new RelayCommand(this.Search);
+
         }
         #endregion
 
@@ -91,15 +93,19 @@
         #region EVENTS
         private void AddEpisode(object parameter)
         {
-            var mmvm = new MichelleManageViewModel(new Episode());
+            Episode newEpisode = new Episode();
+            var mmvm = new MichelleManageViewModel(newEpisode);
             var win = new MichelleManageView { DataContext = mmvm };
-            win.Closed += (s, eventarg) =>
             {
-                EpisodeBusiness episodeBusiness = new EpisodeBusiness();
-                this.Episodes = new ObservableCollection<Episode>(episodeBusiness.AllEpisodes());
-            };
-            // win.DataChanged += AddWindow_DataChanged;
-            win.Show();
+                win.Closed += (s, eventarg) =>
+                {
+                    Episodes.Add(newEpisode);
+                    EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+                    episodeBusiness.AddEpisode(newEpisode);
+                };
+                // win.DataChanged += AddWindow_DataChanged;
+                win.Show();
+            }
         }
 
         //private void AddWindow_DataChanged(object sender, EventArgs e)
