@@ -109,8 +109,6 @@ namespace MandalorianDB.PresentationLayer
                     case MessageBoxResult.Yes:
                         Episodes.Remove(SelectedEpisode);
                         MessageBox.Show($"{episodeName} Episode Deleted", "Delete Episodes");
-                        EpisodeBusiness episodeBusiness = new EpisodeBusiness();
-                        episodeBusiness.DeleteEpisode(SelectedEpisode.Id);
 
                         if (Episodes.Any()) SelectedEpisode = Episodes[0];
                         break;
@@ -137,8 +135,6 @@ namespace MandalorianDB.PresentationLayer
                 Episodes.Remove(SelectedEpisode);
                 Episodes.Add(episodeOperation.Episode);
                 SelectedEpisode = episodeOperation.Episode;
-                EpisodeBusiness episodeBusiness = new EpisodeBusiness();
-                episodeBusiness.UpdateEpisode(episodeOperation.Episode);
             }
         }
 
@@ -157,8 +153,6 @@ namespace MandalorianDB.PresentationLayer
             {
                 Episodes.Add(episodeOperation.Episode);
                 SelectedEpisode = episodeOperation.Episode;
-                EpisodeBusiness episodeBusiness = new EpisodeBusiness();
-                episodeBusiness.AddEpisode(episodeOperation.Episode);
             }
 
         }

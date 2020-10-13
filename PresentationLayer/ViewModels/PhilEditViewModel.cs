@@ -103,7 +103,7 @@ namespace MandalorianDB.PresentationLayer
             if (NewChar != null)
             {
                 
-                
+                ;
                 
                 UserEpisode.Characters.Add(NewChar);
             }
