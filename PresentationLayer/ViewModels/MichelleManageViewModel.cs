@@ -40,7 +40,7 @@
         public MichelleManageViewModel(Episode episode)
         {
             this.Episode = episode;
-            this.Episode.Characters = new ObservableCollection<string>();
+            this.Episode.Characters = new List<string>();
             this.Chars = new ObservableCollection<string>();
             this.CommandAddCharacter = new RelayCommand(this.AddCharacter);
             this.CommandSaveData = new RelayCommand(this.SaveEpisode);
@@ -115,7 +115,7 @@
 
                     Chars.Add(NewChar);
                     OnPropertyChanged(nameof(Chars));
-                    this.Episode.Characters = Chars;
+                    this.Episode.Characters = Chars.ToList();
                 }
                 MessageBox.Show("Characters added successfully.");
             }
