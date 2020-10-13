@@ -37,9 +37,9 @@
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             var model = this.DataContext as MichelleManageViewModel;
-            var characters = this.CharactersListBox.Items.Cast<string>();
+            var characters = this.CharactersListBox.Items.Cast<string>().ToList();
 
-            //model.Episode.Characters = characters;
+            model.Episode.Characters = characters;
         }
     }
 }

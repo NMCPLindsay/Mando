@@ -24,9 +24,9 @@ namespace MandalorianDB.PresentationLayer
         private EpisodeOperation _episodeOperation;
         private string _selectedChar;
         public string NewChar { get; set; }
-        private ObservableCollection<string> _chars;
+        private List<string> _chars;
 
-        public ObservableCollection<string> Chars
+        public List<string> Chars
         {
             get { return _chars; }
             set
@@ -47,7 +47,7 @@ namespace MandalorianDB.PresentationLayer
         {
             NewEpisode = episodeOp.Episode;
             _episodeOperation = episodeOp;
-            Chars = new ObservableCollection<string>();
+            Chars = new List<string>();
             
             ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
             ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddEpisode));

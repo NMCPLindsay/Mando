@@ -24,9 +24,9 @@ namespace MandalorianDB.PresentationLayer
         public Episode UserEpisode { get; set; }
         private EpisodeOperation _episodeOperation;
         private string _selectedChar;
-        private ObservableCollection<string> _chars;
+        private List<string> _chars;
 
-        public ObservableCollection<string> Chars
+        public List<string> Chars
         {
             get { return _chars; }
             set { _chars = value;
@@ -46,8 +46,8 @@ namespace MandalorianDB.PresentationLayer
         public PhilEditViewModel(Episode episode)
         {
             UserEpisode = episode;
-            
-            
+            Chars = new List<string>();
+            UserEpisode.Characters = Chars;
             
 
 
@@ -80,8 +80,8 @@ namespace MandalorianDB.PresentationLayer
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        
-                        UserEpisode.Characters.Remove(parameter.ToString());
+                        Chars.Remove(parameter.ToString());
+                        UserEpisode.Characters = Chars;
                         MessageBox.Show($"{parameter} character Deleted", "Delete Character");
 
                         if (UserEpisode.Characters.Any())
@@ -102,10 +102,10 @@ namespace MandalorianDB.PresentationLayer
             NewChar = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
             if (NewChar != null)
             {
+                Chars = UserEpisode.Characters.ToList();
+                Chars.Add(NewChar);
                 
-                ;
-                
-                UserEpisode.Characters.Add(NewChar);
+                UserEpisode.Characters = Chars;
             }
             else
             {

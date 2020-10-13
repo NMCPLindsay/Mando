@@ -434,7 +434,7 @@ namespace MandalorianDB.PresentationLayer.ViewModels
         private void ResetDetailedViewEpisode()
         {
             DetailedViewEpisode = new Episode();
-            DetailedViewEpisode.Characters = new ObservableCollection<string>();
+            DetailedViewEpisode.Characters = new List<string>();
         }
         private void OnCancelEpisode(object parameter)
         {

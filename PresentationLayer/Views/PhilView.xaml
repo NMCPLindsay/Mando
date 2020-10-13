@@ -174,7 +174,7 @@
             </Grid>
             <Grid Grid.Row="3" Grid.Column="0">
                 <StackPanel Orientation="Vertical">
-                    <ListBox Style="{StaticResource MainListBox}" ItemsSource="{Binding Episodes}" SelectedItem="{Binding SelectedEpisode}" DisplayMemberPath="Name" ScrollViewer.CanContentScroll="True"/>
+                    <ListBox Style="{StaticResource MainListBox}" ItemsSource="{Binding Episodes}" SelectedItem="{Binding SelectedEpisode}" DisplayMemberPath="Name"/>
 
                 </StackPanel>
             </Grid>
