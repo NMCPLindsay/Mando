@@ -47,7 +47,7 @@ namespace MandalorianDB.PresentationLayer
         {
             NewEpisode = episodeOp.Episode;
             _episodeOperation = episodeOp;
-            Chars = new List<string>();
+            NewEpisode.Characters = new ObservableCollection<string>();
             
             ButtonAddCommand = new RelayCommand(new Action<object>(AddEpisode));
             ButtonCancelCommand = new RelayCommand(new Action<object>(CancelAddEpisode));
@@ -59,9 +59,8 @@ namespace MandalorianDB.PresentationLayer
             NewChar = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
             if (NewChar != "")
             {
-                
-                Chars.Add(NewChar);
-                NewEpisode.Characters = Chars;
+
+                NewEpisode.Characters.Add(NewChar);
                 
             }
             else

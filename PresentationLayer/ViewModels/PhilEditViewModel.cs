@@ -47,7 +47,7 @@ namespace MandalorianDB.PresentationLayer
         {
             UserEpisode = episode;
             Chars = new List<string>();
-            UserEpisode.Characters = Chars;
+            
             
 
 
@@ -80,8 +80,8 @@ namespace MandalorianDB.PresentationLayer
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        Chars.Remove(parameter.ToString());
-                        UserEpisode.Characters = Chars;
+                        
+                        UserEpisode.Characters.Remove(parameter.ToString());
                         MessageBox.Show($"{parameter} character Deleted", "Delete Character");
 
                         if (UserEpisode.Characters.Any())
@@ -102,10 +102,9 @@ namespace MandalorianDB.PresentationLayer
             NewChar = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
             if (NewChar != null)
             {
-                Chars = UserEpisode.Characters.ToList();
-                Chars.Add(NewChar);
+                UserEpisode.Characters.Add(NewChar);
                 
-                UserEpisode.Characters = Chars;
+                
             }
             else
             {
