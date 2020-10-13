@@ -289,6 +289,7 @@ namespace MandalorianDB.PresentationLayer.ViewModels
                     if (DetailedViewEpisode.Characters.Any())
                     {
                         SelectedChar = DetailedViewEpisode.Characters[0];
+                        MessageBox.Show($"{parameter} Character Deleted");
                     }
                 }
                 else
@@ -300,9 +301,12 @@ namespace MandalorianDB.PresentationLayer.ViewModels
         }
         private void OnAddChar(object parameter)
         {
-            IsEditingAdding = true;
-            ShowAddEditDeleteButtons = false;
-            DetailedViewEpisode.Characters.Add(NewChar);
+           
+                IsEditingAdding = true;
+                ShowAddEditDeleteButtons = false;
+                DetailedViewEpisode.Characters.Add(NewChar);
+                 MessageBox.Show($"{NewChar}, Character Added");
+                 NewChar = "";
         }
        
         private void OnAddEpisode(object parameter)
