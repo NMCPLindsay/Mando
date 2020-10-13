@@ -18,10 +18,13 @@
     public class MichelleViewModel : ObservableObject
     {
         #region CONSTRUCTOR
+        private EpisodeOperation _episodeOperation;
         public MichelleViewModel()
         {
-            this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
-                            
+            // this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+            this.Episodes = new ObservableCollection<Episode>(episodeBusiness.AllEpisodes());
+
             this.ButtonAddCommand = new RelayCommand(this.AddEpisode);
             this.ButtonEditCommand = new RelayCommand(this.EditEpisode);
             this.ButtonDeleteCommand = new RelayCommand(this.DeleteEpisode);
@@ -30,6 +33,7 @@
             this.RadioCommandSortDesc = new RelayCommand(this.SortDesc);
             this.RadioCommandSearchCrit = new RelayCommand(this.SetSearchCriteria);
             this.ButtonSearchCommand = new RelayCommand(this.Search);
+
         }
         #endregion
 
@@ -89,11 +93,26 @@
         #region EVENTS
         private void AddEpisode(object parameter)
         {
-            var mmvm = new MichelleManageViewModel(new Episode());
+            Episode newEpisode = new Episode();
+            var mmvm = new MichelleManageViewModel(newEpisode);
             var win = new MichelleManageView { DataContext = mmvm };
-
-            win.Show();
+            {
+                win.Closed += (s, eventarg) =>
+                {
+                    Episodes.Add(newEpisode);
+                    EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+                    episodeBusiness.AddEpisode(newEpisode);
+                };
+                // win.DataChanged += AddWindow_DataChanged;
+                win.Show();
+            }
         }
+
+        //private void AddWindow_DataChanged(object sender, EventArgs e)
+        //{
+        //    EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+        //    this.Episodes = new ObservableCollection<Episode>(episodeBusiness.AllEpisodes());
+        //}
 
         private void EditEpisode(object parameter)
         {
@@ -124,6 +143,9 @@
             {
                 if (MessageBox.Show("Are you sure that you want to delete this episode?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
+                    EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+                    var episode = parameter as Episode;
+                    episodeBusiness.DeleteEpisode(episode.Id);
                     this.Episodes.Remove(parameter as Episode);
                 }
             }
@@ -131,9 +153,11 @@
 
         private void Search(object parameter)
         {
-            this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            // this.Episodes = new ObservableCollection<Episode>(SessionData.GetEpisodeList());
+            EpisodeBusiness episodeBusiness = new EpisodeBusiness();
+            this.Episodes = new ObservableCollection<Episode>(episodeBusiness.AllEpisodes());
             this.SearchName = (parameter as TextBox).Text;
-            
+
             if (!(this.CriteriaFilter is null))
             {
                 switch (this.CriteriaFilter.ToUpper())
@@ -142,7 +166,7 @@
                         for (var i = this.Episodes.Count - 1; i >= 0; i--)
                         {
                             var episode = this.Episodes[i];
-                            
+
                             if (!string.Equals(episode.Director.Trim().ToUpper(), this.SearchName.Trim().ToUpper(), StringComparison.CurrentCultureIgnoreCase))
                             {
                                 this.Episodes.RemoveAt(i);

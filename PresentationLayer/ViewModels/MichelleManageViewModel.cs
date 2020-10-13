@@ -1,6 +1,9 @@
 ﻿namespace MandalorianDB.PresentationLayer.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -13,12 +16,32 @@
     {
         private Episode _episode;
         private MichelleView _parentWindow;
+        private EpisodeOperation _episodeOperation;
+        public string NewChar { get; set; }
+        private ObservableCollection<string> _chars;
+
+
+        public ObservableCollection<string> Chars
+        {
+            get { return _chars; }
+            set
+            {
+                _chars = value;
+                OnPropertyChanged(nameof(Chars));
+            }
+        }
+
+
+
+        // public string Value { get; set; }
 
 
         #region CONSTRUCTORS
         public MichelleManageViewModel(Episode episode)
         {
             this.Episode = episode;
+            this.Episode.Characters = new ObservableCollection<string>();
+            this.Chars = new ObservableCollection<string>();
             this.CommandAddCharacter = new RelayCommand(this.AddCharacter);
             this.CommandSaveData = new RelayCommand(this.SaveEpisode);
             this.CommandRemoveCharacter = new RelayCommand(this.RemoveCharacter);
@@ -26,7 +49,7 @@
 
         public MichelleManageViewModel()
         {
-            if (this.Episode == null) this.Episode = new Episode();
+            // if (this.Episode == null) this.Episode = new Episode();
 
             this.CommandAddCharacter = new RelayCommand(this.AddCharacter);
             this.CommandSaveData = new RelayCommand(this.SaveEpisode);
@@ -62,19 +85,39 @@
             }
             else
             {
+                EpisodeBusiness _episodeBusiness = new EpisodeBusiness();
+                if (this.Episode.Id == 0)
+                    _episodeBusiness.AddEpisode(this.Episode);
+                else
+                    _episodeBusiness.UpdateEpisode(this.Episode);
+
+                MessageBox.Show("Data saved successfully.");
+
+
+                var win = Application.Current.Windows[0];
+                win.Close();
+
             }
         }
 
         private void AddCharacter(object parameter)
+
         {
             var textbox = parameter as TextBox;
+            EpisodeOperation episodeOp = _episodeOperation;
 
             if (textbox.Text != string.Empty)
             {
-                this.Episode.Characters.Add(textbox.Text);
-                textbox.Text = string.Empty;
 
-                // TODO UpdateSource
+                NewChar = parameter.ToString().Replace("System.Windows.Controls.TextBox: ", "");
+                if (NewChar != "")
+                {
+
+                    Chars.Add(NewChar);
+                    OnPropertyChanged(nameof(Chars));
+                    this.Episode.Characters = Chars;
+                }
+                MessageBox.Show("Characters added successfully.");
             }
             else
             {

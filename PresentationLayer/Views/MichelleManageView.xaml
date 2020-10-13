@@ -109,7 +109,7 @@
                     <TextBox x:Name="AddCharacterTextBox" Width="100" Visibility="Hidden" Margin="5 0 0 0" Foreground="DarkGoldenrod" MaxHeight="20" />
                 </StackPanel>
                 <ListBox x:Name="CharactersListBox" Height="75" Width="260"
-                         ItemsSource="{Binding Episode.Characters}" >
+                         ItemsSource="{Binding Chars}" >
                 </ListBox>
             </StackPanel>
         </Grid>
@@ -122,7 +122,7 @@
         </Grid>
         <Grid Grid.Row="7" Grid.Column="0">
             <StackPanel Orientation="Horizontal" >
-                <Button x:Name="SaveButton" Style="{StaticResource ButtonStyleSmall}" Command="{Binding CommandSaveData}" CommandParameter="{Binding NewEpisode}" Content="Save" VerticalAlignment="Top" HorizontalAlignment="Left" Click="SaveButton_Click" Margin="10,6,10,0" />
+                <Button x:Name="SaveButton" Style="{StaticResource ButtonStyleSmall}" Command="{Binding CommandSaveData}" CommandParameter="{Binding NewEpisode}" Content="Save" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="SaveButton_Click" Margin="10,0,10,21" />
                 <Button x:Name="CancelButton" Style="{StaticResource ButtonStyleSmall}" Command="{Binding Window}" Content="Cancel" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Click" />
             </StackPanel>
         </Grid>
